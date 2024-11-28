@@ -24,13 +24,26 @@ const theme = createTheme({
       secondary: "#757575", // Gray
     },
   },
+  components: {
+    // Customize other components as needed
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: {
+          margin: 0,
+          padding: 0,
+        },
+      },
+    },
+  },
+  
 });
 
 function App() {
   return (
     <>
+     <CssBaseline />
       <ThemeProvider theme={theme}>
-        {/* <CssBaseline /> */}
+       
 
         <BrowserRouter>
           <Routes>

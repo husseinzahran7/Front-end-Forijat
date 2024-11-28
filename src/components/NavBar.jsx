@@ -16,9 +16,10 @@ const names={
     },
 
     en:{
-        logoName:'Amal'
+        logoName:'AMAL'
     }
 }
+
 
 function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -30,7 +31,7 @@ function Navbar() {
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
       <Typography variant="h6" sx={{ my: 2 ,color: 'primary.main' }}>
-        AMAL
+        {names.en.logoName}
       </Typography>
       <List>
         {navItems.map((item) => (
