@@ -1,17 +1,19 @@
 import React from 'react';
-import { 
-  Container, 
-  Typography, 
-  Button, 
-  Box, 
-  Grid, 
-  Card, 
-  CardContent, 
+import {
+  Container,
+  Typography,
+  Button,
+  Box,
+  Grid,
+  Card,
+  CardContent,
   CardActions,
   TextField,
   LinearProgress
 } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
+import SlideShow from '../components/SlideShow';
+import { Image } from '@mui/icons-material';
 
 // Mock data for featured cases
 const featuredCases = [
@@ -20,54 +22,40 @@ const featuredCases = [
   { id: 3, name: 'Omar Khalid', amount: 3000, raised: 1000, story: 'Omar needs assistance to clear his business debts and avoid imprisonment.' },
 ];
 
+const slides = [
+  "./src/images/charity-photo.jpeg",
+  'https://images.unsplash.com/photo-1587691592099-24045742c181?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+];
+
 function Home() {
   return (
     <Box>
       {/* Banner Section */}
-      <Box 
-        sx={{ 
-          bgcolor: 'primary.main', 
-          color: 'white', 
-          py: 8, 
+
+
+      <Box
+        sx={{
+          // bgcolor: 'primary.main',
+          color: 'white',
+          pt: { xs: 3, md: 4 },
+          // py: 3,
           textAlign: 'center'
         }}
       >
-        <Container maxWidth="md">
-          <Typography variant="h2" component="h1" gutterBottom>
-            Welcome to AMAL
-          </Typography>
-          <Typography variant="h5" paragraph>
-            Empowering freedom through compassion and community support
-          </Typography>
-          <Button 
-            variant="contained" 
-            color="secondary" 
-            size="large" 
-            component={RouterLink} 
-            to="/donate"
-            sx={{ mt: 2 }}
-          >
-            Donate Now
-          </Button>
-        </Container>
+
+        <Box >
+          <SlideShow slides={slides} />
+        </Box>
+
       </Box>
 
       {/* Quote Section */}
-      <Box sx={{ 
-        bgcolor: 'background.paper',
-         py: 6 }}>
+      <Box sx={{
+        bgcolor: 'primary.main',
+        py: 12
+      }}>
         <Container maxWidth="md">
-
-            
-
           <img src="https://ehsan.sa/assets/images/homepage/lntnalo-ayah.svg" alt="Quote Image" style={{ maxWidth: '100%', height: 'auto', display: 'block', margin: '0 auto' }} />
-
-          {/* <Typography variant="h4" align="center" color="text.secondary" paragraph>
-            "The greatest good is what we do for one another."
-          </Typography>
-          <Typography variant="subtitle1" align="center" color="text.secondary">
-            - Mother Teresa
-          </Typography> */}
         </Container>
       </Box>
 
@@ -77,13 +65,13 @@ function Home() {
           About Our Service
         </Typography>
         <Typography variant="body1" paragraph>
-          AMAL is a platform dedicated to helping individuals burdened by debt and facing imprisonment. 
-          Our key service, Forijat, aims to collect donations to pay off these debts and secure the release of those in need. 
+          AMAL is a platform dedicated to helping individuals burdened by debt and facing imprisonment.
+          Our key service, Forijat, aims to collect donations to pay off these debts and secure the release of those in need.
           We believe in second chances and the power of community support to transform lives.
         </Typography>
         <Typography variant="body1" paragraph>
-          Through transparency, trust, and efficient management of donations, we create a bridge between those willing to give 
-          and those in desperate need. Join us in our mission to bring hope, dignity, and freedom to individuals and families 
+          Through transparency, trust, and efficient management of donations, we create a bridge between those willing to give
+          and those in desperate need. Join us in our mission to bring hope, dignity, and freedom to individuals and families
           across our community.
         </Typography>
       </Container>
@@ -113,10 +101,10 @@ function Home() {
                       <Typography variant="body2" color="text.secondary">
                         Amount Raised: ${case_.raised}
                       </Typography>
-                      <LinearProgress 
-                        variant="determinate" 
-                        value={progress} 
-                        sx={{ mt: 2, mb: 1 }} 
+                      <LinearProgress
+                        variant="determinate"
+                        value={progress}
+                        sx={{ mt: 2, mb: 1 }}
                       />
                       <Typography variant="body2" color="text.secondary" align="right">
                         {progress.toFixed(0)}%

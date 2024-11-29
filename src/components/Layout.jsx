@@ -14,7 +14,7 @@ function Layout({ children }) {
     // border: '1px solid red'
      }}>
     <Navbar />
-      <Container component="main" sx={{ mt: 4, mb: 4, flex: 1 }}>
+      <Container component="main" sx={{ mt: 0, mb: 0, flex: 1 }} maxWidth={false}>
         {children}
       </Container>
       <Footer />
