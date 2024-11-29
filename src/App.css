@@ -2,5 +2,151 @@
   /* padding: 0; */
   /* margin: 0; */
   /* box-sizing: border-box; */
-  outline: 1px solid red;
+/*   outline: 1px solid red; */
+}
+
+.slideshow-container {
+  width: 100%;
+  /* Adjust width as needed */
+  height: 70vh;
+  /* Adjust height as needed */
+  position: relative;
+  margin: auto;
+  overflow: hidden;
+  /* Ensure no overflow from container */
+  /* border-radius: 18px; */
+}
+
+.image-slider {
+  width: 100%;
+  /* Adjust width as needed */
+  height: 70vh;
+  object-fit: cover;
+  /* Ensure image covers the container without distortion */
+  object-position: 50% 50%;
+  /* border-radius: 18px; */
+}
+
+/* Hide the images by default */
+
+@media (max-width: 600px) {
+  .slideshow-container {
+    height: 95vh;
+  }
+
+  .image-slider {
+    height: 95vh;
+  }
+}
+
+.mySlides {
+  display: none;
+  /* border-radius: 18px; */
+}
+
+.mySlides.active {
+  display: block;
+}
+
+/* Next & previous buttons */
+.prev,
+.next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  margin-top: -22px;
+  padding: 16px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+.prev {
+  left: 0;
+}
+
+.prev:hover,
+.next:hover {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+
+/* Fading animation */
+.fade {
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@keyframes fade {
+  from {
+    opacity: .9;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    transform: translateY(50%);
+    opacity: 0;
+
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+@keyframes fadeIn2 {
+  0% {
+    transform: translateY(300%);
+    opacity: 0;
+
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+@keyframes fadeIn3 {
+  0% {
+    transform: translateY(500%);
+    opacity: 0;
+
+  }
+  75% {
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInPage {
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
