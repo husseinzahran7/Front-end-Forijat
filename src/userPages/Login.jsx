@@ -9,6 +9,8 @@ import MyReCaptcha from '../components/ReCAPTCHA';
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  // State to track reCAPTCHA verification
   const [verified, setVerified] = useState(false);
   const [formData, setFormData] = useState({});
 
