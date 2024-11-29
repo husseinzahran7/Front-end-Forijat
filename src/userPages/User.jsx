@@ -8,6 +8,7 @@ import Layout from '../components/Layout'
 import Home from './Home'
 import Login from './Login'
 import Cases from './Cases'
+import About from './About'
 
 
 const User = () => {
@@ -19,6 +20,7 @@ const User = () => {
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/Cases" element={<Cases />} />
+                <Route path="/about" element={<About />} />
             {/* <Route path="/cases" element={<Cases />} /> */}
             {/* <Route path="/donate" element={<Donate />} /> */}
             {/* <Route path="/dashboard" element={<Dashboard />} /> */}

@@ -9,8 +9,10 @@ function Layout({ children }) {
     <>
     
     <Box
-     
-    sx={{mt:0,mb:0, display: 'flex', flexDirection: 'column', minHeight: '100vh',minWidth: '80vw', border: '1px solid red' }}>
+
+    sx={{mt:4,mb:0, display: 'flex', flexDirection: 'column', minHeight: '100vh',minWidth: '80vw', 
+    // border: '1px solid red'
+     }}>
     <Navbar />
       <Container component="main" sx={{ mt: 4, mb: 4, flex: 1 }}>
         {children}

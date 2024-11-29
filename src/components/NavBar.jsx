@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { AppBar, Toolbar, Typography, Button, Box, IconButton, Drawer, List, ListItem, ListItemText } from '@mui/material'
+import { AppBar, Toolbar, Typography, Button, Box, IconButton, Drawer, List, ListItem, ListItemText, Container } from '@mui/material'
 import { Link as RouterLink } from 'react-router-dom'
 import MenuIcon from '@mui/icons-material/Menu'
 
@@ -45,8 +45,13 @@ function Navbar() {
 
   return (
     <>
-      <AppBar position="static" color="primary" elevation={0}>
-        <Toolbar>
+      <AppBar position="fixed" color="primary" elevation={0}>
+        <Toolbar
+           sx={{
+                justifyContent:'space-between'
+
+           }}
+        >
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -56,15 +61,33 @@ function Navbar() {
           >
             <MenuIcon />
           </IconButton>
+
+          {/* <Container></Container> */}
+          <Box>
           <Typography
             variant="h6"
             component={RouterLink}
             to="/"
-            sx={{ flexGrow: 1, color: 'white', textDecoration: 'none', display: { xs: 'none', sm: 'block' } }}
+            sx={{ flexGrow: 1, color: 'white', textDecoration: 'none',
+             fontFamily: 'Roboto',
+             fontSize: '2rem',
+             
+                 
+             fontWeight: 'bold',
+             ml:1,
+             mr:1,
+                display: { 
+                    xs: 'none', 
+                    sm: 'block',
+                    // maxWidth:'auto',
+                    textAlign:'left'
+                     
+                } }}
           >
             {names.en.logoName}
           </Typography>
-          <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+          </Box>
+          <Box sx={{ display: { xs: 'none', sm: 'block' }, }}>
             {navItems.map((item) => (
               <Button key={item.title} component={RouterLink} to={item.path} sx={{ color: 'white' }}>
                 {item.title}
