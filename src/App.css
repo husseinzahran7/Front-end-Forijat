@@ -2,5 +2,19 @@
   /* padding: 0; */
   /* margin: 0; */
   /* box-sizing: border-box; */
-  outline: 1px solid red;
+  /* outline: 1px solid red; */
+}
+
+/* CSS file */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #182847;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color:#f1f1f1;
 }
