@@ -20,6 +20,7 @@ function Cases() {
       <Typography variant="h4" component="h1" gutterBottom color="primary">
         Current Cases
       </Typography>
+      
       <Grid container spacing={4}>
         {mockCases.map((case_) => {
           const progress = (case_.raised / case_.amount) * 100

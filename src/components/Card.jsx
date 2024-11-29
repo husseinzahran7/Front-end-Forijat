@@ -8,7 +8,7 @@ const mockCases = [
   { id: 3, name: 'Bob Johnson', amount: 3000, raised: 1000 },
 ]
 
-function Cases() {
+function CardC() {
   return (
     <Container maxWidth="md" sx={{ my: 4 }}>
       <Typography variant="h4" component="h1" gutterBottom color="primary">
@@ -54,5 +54,5 @@ function Cases() {
   )
 }
 
-export default Cases
+export default CardC
 
