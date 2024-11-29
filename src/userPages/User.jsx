@@ -10,6 +10,7 @@ import Login from './Login'
 import Cases from './Cases'
 import About from './About'
 import Signup from './Signup'
+import Test from './Test'
 
 
 const User = () => {
@@ -23,6 +24,7 @@ const User = () => {
                 <Route path="/Cases" element={<Cases />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/Signup" element={<Signup/>} />
+                <Route path="/test" element={<Test/>} />
                 
             {/* <Route path="/cases" element={<Cases />} /> */}
             {/* <Route path="/donate" element={<Donate />} /> */}
