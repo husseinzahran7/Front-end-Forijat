@@ -10,14 +10,16 @@ import User from "./userPages/User";
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#2196f3", // Blue
+      //main: "#2196f3", // Blue
+      main: "#182847", // Blue
     },
     secondary: {
       main: "#757575", // Gray
     },
     background: {
       default: "#ffffff", // White
-      paper: "#f5f5f5", // Light Gray
+      //paper: "#f5f5f5", // Light Gray
+      paper: "#D9D9D9", // Light Gray
     },
     text: {
       primary: "#333333", // Dark Gray

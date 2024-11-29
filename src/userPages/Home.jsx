@@ -53,14 +53,21 @@ function Home() {
       </Box>
 
       {/* Quote Section */}
-      <Box sx={{ bgcolor: 'background.paper', py: 6 }}>
+      <Box sx={{ 
+        bgcolor: 'background.paper',
+         py: 6 }}>
         <Container maxWidth="md">
-          <Typography variant="h4" align="center" color="text.secondary" paragraph>
+
+            
+
+          <img src="https://ehsan.sa/assets/images/homepage/lntnalo-ayah.svg" alt="Quote Image" style={{ maxWidth: '100%', height: 'auto', display: 'block', margin: '0 auto' }} />
+
+          {/* <Typography variant="h4" align="center" color="text.secondary" paragraph>
             "The greatest good is what we do for one another."
           </Typography>
           <Typography variant="subtitle1" align="center" color="text.secondary">
             - Mother Teresa
-          </Typography>
+          </Typography> */}
         </Container>
       </Box>
 
