@@ -119,8 +119,9 @@ const SlideShow = ({ slides }) => {
               variant="contained"
               color="primary"
               size="large"
+              href="/cases"
               // component={RouterLink}
-              // to="/donate"
+              // to="/cases"
               sx={{
                 mt: 2,
                 animation: "fadeIn3 3s ease-in-out",
