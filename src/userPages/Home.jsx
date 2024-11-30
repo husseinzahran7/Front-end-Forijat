@@ -13,7 +13,9 @@ import {
 } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import SlideShow from '../components/SlideShow';
-import { Image } from '@mui/icons-material';
+// import { Image } from '@mui/icons-material';
+// import {CardC} from '../components/Card';
+
 
 // Mock data for featured cases
 const featuredCases = [
@@ -40,8 +42,8 @@ const lang = {
   AboutUs: "حولنا",
   AboutUsDesc1: "امل هي منصة مخصصة لمساعدة الأفراد المثقلين بالديون والذين يواجهون خطر السجن. تهدف خدمتنا الرئيسية فريج إلى جمع التبرعات لسداد هذه الديون وضمان إطلاق سراح المحتاجين. نحن نؤمن بفرص الحياة الثانية وبقوة الدعم المجتمعي في تغيير الأرواح. من خلال الشفافية والثقة والإدارة الفعالة للتبرعات، نبني جسراً بين من يرغبون في العطاء ومن هم في أمس الحاجة إليه. انضموا إلينا في مهمتنا لنشر الأمل والكرامة والحرية للأفراد والعائلات في مجتمعنا.",
   AboutUsDesc2: "من خلال الشفافية والثقة والإدارة الفعالة للتبرعات، نبني جسراً بين من يرغبون في العطاء ومن هم في أمس الحاجة إليه. انضموا إلينا في مهمتنا لنشر الأمل والكرامة والحرية للأفراد والعائلات في مجتمعنا.",
-  FeaturedCases:"من فرص التبرع"
-
+  FeaturedCases:"من فرص التبرع",
+  ViewAllCases: "عرض جميع التبرعات",
 };
 
 function Home() {
@@ -77,7 +79,7 @@ function Home() {
       </Box>
 
       {/* Service Description */}
-      <Container maxWidth="lg" sx={{ py: 8, direction: 'rtl' }}>
+      <Container maxWidth="md" sx={{ py: 8, direction: 'rtl' }}>
         <Typography variant="h3" gutterBottom color="primary" dir="rtl">
           {/* About Our Service */}
           {lang.AboutUs}
@@ -98,12 +100,16 @@ function Home() {
 
       {/* Featured Cases Section */}
       <Box sx={{ bgcolor: 'background.paper', py: 8 }}>
-        <Container maxWidth="lg">
+        <Container maxWidth="md">
           <Typography variant="h3" gutterBottom color="primary" align="center">
 
             {/* Featured Cases */}
             {lang.FeaturedCases}
           </Typography>
+
+          
+
+
           <Grid container spacing={4}>
             {featuredCases.map((case_) => {
               const progress = (case_.raised / case_.amount) * 100;
@@ -145,9 +151,16 @@ function Home() {
               );
             })}
           </Grid>
-          <Box sx={{ textAlign: 'center', mt: 4 }}>
-            <Button variant="contained" color="primary" component={RouterLink} to="/cases">
-              View All Cases
+
+
+
+          <Box sx={{ textAlign: 'center', mt: 4 ,
+            // 
+              }}>
+            <Button variant="contained" color="primary" size="large" component={RouterLink} to="/cases" sx={{fontWeight:'800' , fontSize:'1.1rem'}}>
+              {/* View All Cases */}
+              {lang.ViewAllCases}
+              
             </Button>
           </Box>
         </Container>

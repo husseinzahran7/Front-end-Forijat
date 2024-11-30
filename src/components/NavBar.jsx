@@ -15,11 +15,18 @@ import {
 import { Link as RouterLink } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 
+// const navItems = [
+//   { title: "Home", path: "/" },
+//   { title: "Cases", path: "/cases" },
+//   { title: "Donate", path: "/donate" },
+//   { title: "Dashboard", path: "/dashboard" },
+// ];
+
 const navItems = [
-  { title: "Home", path: "/" },
-  { title: "Cases", path: "/cases" },
-  { title: "Donate", path: "/donate" },
-  { title: "Dashboard", path: "/dashboard" },
+  { title: "الرئيسية ", path: "/" }, // Home in Arabic
+  { title: "الحالات ", path: "/cases" }, // Cases in Arabic
+  { title: "التبرع ", path: "/donate" }, // Donate in Arabic
+  { title: "لوحة التحكم ", path: "/dashboard" }, // Dashboard in Arabic
 ];
 
 const names = {
@@ -58,7 +65,7 @@ function Navbar() {
     <>
       <AppBar position="fixed" color="primary" elevation={0}>
         {/* <Toolbar sx={{ justifyContent: "space-between" , bgcolor:'secondary.main'}}/> */}
-        <Box sx={{  py:3 ,bgcolor:'secondary.main' }}></Box>
+        <Box sx={{  py:3 ,bgcolor:'secondary.main'  }}></Box>
         <Toolbar
           sx={{
             justifyContent: "space-between",
@@ -105,7 +112,17 @@ function Navbar() {
                 key={item.title}
                 component={RouterLink}
                 to={item.path}
-                sx={{ color: "white" }}
+                sx={ { color: "white" ,
+                   fontSize:"1.4rem",
+                   fontWeight: "bold",
+                  mx: 2,
+                  display: {
+                  xs: "none",
+                  sm: "inline",
+                  textAlign: "left",
+                  // mx: 6,
+                }, }}
+
               >
                 {item.title}
               </Button>
