@@ -66,7 +66,7 @@ const PrivacyPolicyRoles = [
 
                 {/* <Box sx={{width:{maxWidth:'100%'}}}/> */}
 
-                <StyledTypography variant="body1">{role.content}</StyledTypography>
+                <StyledTypography variant="body1" component="p" >{role.content}</StyledTypography>
               </Grid>
             ))}
           </Grid>
