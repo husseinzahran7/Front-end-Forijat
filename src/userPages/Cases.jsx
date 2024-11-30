@@ -80,7 +80,7 @@ function Cases() {
   const copyShareLink = () => {
     if (selectedCase) {
       // In a real app, this would be your actual case detail URL
-      const shareLink = `https://yourapp.com/cases/${selectedCase.id}`;
+      const shareLink = `https://Amal.com/cases/${selectedCase.id}`;
       navigator.clipboard.writeText(shareLink);
       // Optionally, show a snackbar or toast to confirm copying
     }
@@ -101,7 +101,7 @@ function Cases() {
         {/* <CardC/> */}
         {currentCases.map((case_) => (
           <Grid item key={case_.id} xs={12} sm={6} md={6} lg={4} container justifyContent="center" >
-            <CardC Story={ case_.story} totalAmount={case_.amount} raisedAmount={case_.raised} InvioceNumber={case_.invoiceNumber}/>
+            <CardC id={case_.id} Story={ case_.story} totalAmount={case_.amount} raisedAmount={case_.raised} InvioceNumber={case_.invoiceNumber} handleShareClick={handleShareClick} case_={case_}/>
           </Grid>
         ))}
       </Grid>
@@ -125,7 +125,7 @@ function Cases() {
             type="text"
             fullWidth
             variant="outlined"
-            value={selectedCase ? `https://yourapp.com/cases/${selectedCase.id}` : ''}
+            value={selectedCase ? `https://Amal.com/cases/${selectedCase.id}` : ''}
             InputProps={{
               endAdornment: (
                 <IconButton onClick={copyShareLink}>

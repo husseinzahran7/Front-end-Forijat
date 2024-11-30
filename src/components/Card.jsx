@@ -10,7 +10,7 @@ const mockCases = [
   { id: 3, name: 'Bob Johnson', amount: 3000, raised: 1000 },
 ]
 
-function CardC({ id, InvioceNumber, Story, totalAmount, raisedAmount }) {
+function CardC({ id, InvioceNumber, Story, totalAmount, raisedAmount ,handleShareClick,case_}) {
   const theme = useTheme();
   const progress = Math.round((raisedAmount / totalAmount) * 100);
   return (
@@ -114,12 +114,12 @@ function CardC({ id, InvioceNumber, Story, totalAmount, raisedAmount }) {
         <CardActions sx={{ width: "100%", justifyContent: 'space-between', px: 2, borderRadius: "0 0 20px 20px" }}>
           <IconButton
             color="primary"
-            // onClick={() => handleShareClick(case_)}
+            onClick={() => handleShareClick(case_)}
             aria-label="share"
           >
             <ShareIcon />
           </IconButton>
-          <Button size="small" variant="contained" color="primary" sx={{ width: "100%", borderRadius: "50px", }}
+          <Button  size="small" variant="contained" href={`/donate/${id}`} color="primary" sx={{ width: "100%", borderRadius: "50px", } }
           >
             Donate now
           </Button>
