@@ -149,3 +149,31 @@
     opacity: 1;
   }
 }
+
+
+@keyframes dotsfadeIn {
+  0% {
+    width: 25px;
+    background-color: "gray";
+    transform-origin: left;
+  }
+
+  100% {
+    width: 45px;
+    background-color: "black";
+    transform-origin: left;
+  }
+}
+@keyframes dotsfadeBack {
+  0% {
+    width: 45px;
+    background-color: "black";
+    transform-origin: left;
+  }
+
+  100% {
+    width: 25px;
+    background-color: "gray";
+    transform-origin: left;
+  }
+}

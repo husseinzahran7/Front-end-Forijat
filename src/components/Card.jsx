@@ -1,5 +1,7 @@
 import React from 'react'
-import { Container, Typography, Grid, Card, CardContent, CardActions, Button, LinearProgress, Box } from '@mui/material'
+import { Container, Typography, Grid, Card, CardContent, CardActions, Button, LinearProgress, Box, IconButton, useTheme } from '@mui/material'
+import CircularProgress from '@mui/material/CircularProgress';
+import ShareIcon from '@mui/icons-material/Share'
 
 // This is a mock data array. In a real application, you would fetch this data from your API.
 const mockCases = [
@@ -8,49 +10,124 @@ const mockCases = [
   { id: 3, name: 'Bob Johnson', amount: 3000, raised: 1000 },
 ]
 
-function CardC() {
+function CardC({ id, InvioceNumber, Story, totalAmount, raisedAmount ,handleShareClick,case_}) {
+  const theme = useTheme();
+  const progress = Math.round((raisedAmount / totalAmount) * 100);
   return (
-    <Container maxWidth="md" sx={{ my: 4 }}>
-      <Typography variant="h4" component="h1" gutterBottom color="primary">
-        Current Cases
-      </Typography>
-      <Grid container spacing={4}>
-        {mockCases.map((case_) => {
-          const progress = (case_.raised / case_.amount) * 100
-          return (
-            <Grid item key={case_.id} xs={12} sm={6} md={4}>
-              <Card elevation={3} sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-                <CardContent sx={{ flexGrow: 1 }}>
-                  <Typography gutterBottom variant="h5" component="div" color="primary">
-                    {case_.name}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    Amount Needed: ${case_.amount}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    Amount Raised: ${case_.raised}
-                  </Typography>
-                  <Box sx={{ mt: 2 }}>
-                    <LinearProgress variant="determinate" value={progress} color="primary" />
-                    <Typography variant="body2" color="text.secondary" align="right">
-                      {progress.toFixed(0)}%
-                    </Typography>
-                  </Box>
-                </CardContent>
-                <CardActions>
-                  <Button size="small" variant="contained" color="primary">
-                    Donate
-                  </Button>
-                  <Button size="small" variant="outlined" color="secondary">
-                    Learn More
-                  </Button>
-                </CardActions>
-              </Card>
-            </Grid>
-          )
-        })}
-      </Grid>
-    </Container>
+    <>
+      <Box sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '356px',
+        border: '1px solid #ddd',
+        borderRadius: '20px',
+        boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
+        overflow: 'hidden',
+      }}>
+        {/* top part */}
+        <Box sx={{ display: "flex", justifyContent: 'center', alignItems: "center", background: 'linear-gradient(to left, #182847, #009DDC)', width: "356px", height: "200px", borderRadius: "20px 20px 0 0", boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)', }}>
+          <Box sx={{ display: "flex", flexDirection: "column", justifyContent: 'center', alignItems: "center", minWidth: "300px" }}>
+            <Box sx={{ width: "90%", height: "100px", bgcolor: "white", p: 2, borderRadius: "5px", alignContent: "center" }}>
+              <Typography textAlign="center">
+                {Story}
+              </Typography>
+            </Box>
+            <Box sx={{ width: "90%", height: "30px", bgcolor: "white", p: 2, borderRadius: "0 0 5px 5px", display: "flex", alignItems: "center", justifyContent: "center", m: 0, background: 'linear-gradient(to right, rgba(24, 40, 71, 0.3), rgba(0, 157, 220, 0.3))', }}>
+              <Typography textAlign="center" color='white'>
+                Invoice number: {InvioceNumber}
+              </Typography>
+            </Box>
+          </Box>
+        </Box>
+        {/* bottom part */}
+        <Box sx={{
+          display: "flex", justifyContent: 'space-around', alignItems: "center", width: "100%", borderBottom: `2px dashed gray`,
+          borderImage: `repeating-linear-gradient(
+            to right,
+            gray 0,
+            gray 10px, /* Dash size */
+            transparent 10px, /* Gap starts */
+            transparent 20px /* Total gap size */
+          )`,
+          borderImageSlice: 1,
+        }}>
+          <Box sx={{ position: 'relative', display: 'inline-flex' }}>
+            <CircularProgress variant="determinate" value={progress} />
+            <Box
+              sx={{
+                top: 0,
+                left: 0,
+                bottom: 0,
+                right: 0,
+                position: 'absolute',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <Typography
+                variant="caption"
+                component="div"
+                sx={{ color: 'text.secondary' }}
+              >
+                {`${Math.round(progress)}%`}
+              </Typography>
+            </Box>
+          </Box>
+          <Box sx={{ p: 3, display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
+            <Typography
+              variant="caption"
+              component="div"
+              sx={{ color: 'text.secondary' }}
+            >
+              Rasid Amount
+            </Typography>
+            <Typography
+              variant="caption"
+              component="div"
+              sx={{ color: 'text.secondary' }}
+            >
+              {raisedAmount}
+            </Typography>
+          </Box>
+          <Box sx={{  display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
+            <Typography
+              variant="caption"
+              component="div"
+              sx={{ color: 'text.secondary' }}
+            >
+              Collected
+            </Typography>
+            <Typography
+              variant="caption"
+              component="div"
+              sx={{ color: 'text.secondary' }}
+            >
+              {`${Math.round(progress)}%`}
+            </Typography>
+          </Box>
+
+
+        </Box>
+        <CardActions sx={{ width: "100%", justifyContent: 'space-between', px: 2, borderRadius: "0 0 20px 20px" }}>
+          <IconButton
+            color="primary"
+            onClick={() => handleShareClick(case_)}
+            aria-label="share"
+          >
+            <ShareIcon />
+          </IconButton>
+          <Button  size="small" variant="contained" href={`/donate/${id}`} color="primary" sx={{ width: "100%", borderRadius: "50px", } }
+          >
+            Donate now
+          </Button>
+
+
+        </CardActions>
+      </Box>
+    </>
   )
 }
 
