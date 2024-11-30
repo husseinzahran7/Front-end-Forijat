@@ -4,9 +4,11 @@ import { Box, Container, Typography, Link, Grid } from '@mui/material';
 function Footer() {
   return (
     <>
-      <Box sx={{ backgroundColor: 'secondary.main', py: 1 }} />
-      <Box component="footer" sx={{ bgcolor: 'primary.main', color: 'white', py: 3, mt: 'auto' }}>
-        <Container maxWidth="lg" display="flex" justifyContent="space-between" alignItems="center">
+      <Box component="footer" sx={{ bgcolor: 'primary.main', color: 'white', py: 0, mt: 'auto' }}>
+      <Box  sx={{ backgroundColor: 'secondary.main', py: 1,mt: 'auto' }} />
+      <Box component="footer" sx={{ bgcolor: 'primary.main', color: 'white', py: 4, mt: 'auto' }}>
+      
+        <Container maxWidth="lg" display="flex" justifyContent="space-between" alignItems="center" >
           <Grid container spacing={2}>
 
             {/* <Grid item xs={12} sm={6} md={4}>
@@ -43,6 +45,7 @@ function Footer() {
           </Grid>
 
         </Container>
+      </Box>
       </Box>
     </>
   );

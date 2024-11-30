@@ -30,6 +30,19 @@ function Navbar() {
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
+
+
+        {/* add logo here */}
+        {/* <img
+        src="../images/amal-logo.svg"
+        alt="AMAL Logo"
+        onError={(e) => {
+          e.target.src = '/fallback-logo.png'; // Replace with your fallback image path
+        }}
+        draggable="false"
+      /> */}
+      
+
       <Typography variant="h6" sx={{ my: 2 ,color: 'primary.main' }}>
         {names.en.logoName}
       </Typography>
@@ -63,7 +76,20 @@ function Navbar() {
           </IconButton>
 
           {/* <Container></Container> */}
-          <Box>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          {/* <img src="../images/amal-logo.svg" alt="AMAL Logo" draggable="false"  /> */}
+    
+          {/* <img
+              src="../images/amal-logo.svg"
+              alt="AMAL Logo"
+              draggable="false"
+              // Handle potential errors (optional)
+              onError={(e) => {
+                e.target.src = '/fallback-logo.png'; // Replace with your fallback image path
+              }}
+            /> */}
+     
+
           <Typography
             variant="h6"
             component={RouterLink}
@@ -71,19 +97,17 @@ function Navbar() {
             sx={{ flexGrow: 1, color: 'white', textDecoration: 'none',
              fontFamily: 'Roboto',
              fontSize: '2rem',
-             
-                 
              fontWeight: 'bold',
              ml:1,
              mr:1,
                 display: { 
                     xs: 'none', 
                     sm: 'block',
-                    // maxWidth:'auto',
                     textAlign:'left'
                      
                 } }}
           >
+            
             {names.en.logoName}
           </Typography>
           </Box>

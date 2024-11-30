@@ -14,9 +14,11 @@ function Layout({ children }) {
     // border: '1px solid red'
      }}>
     <Navbar />
-      <Container component="main" sx={{ mt: 0, mb: 0, flex: 1 }} maxWidth={false}>
+
+      {/* <Container component="main" sx={{ mt: 0, mb: 0, p: 0,m:0, flex: 1}}maxWidth={false}> */}
         {children}
-      </Container>
+      {/* </Container> */}
+      
       <Footer />
     </Box>
     </>

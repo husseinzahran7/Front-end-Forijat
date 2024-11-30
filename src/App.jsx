@@ -8,6 +8,19 @@ import "./App.css";
 import User from "./userPages/User";
 
 const theme = createTheme({
+  // padding and margin 0
+  typography: {
+    fontFamily: ["Roboto", "sans-serif"].join(","),
+    fontSize: 14,
+    fontWeightLight: 300,
+    fontWeightRegular: 400,
+    fontWeightMedium: 500,
+    fontWeightBold: 700,
+  },
+  //root padding and margin 0
+
+
+
   palette: {
     primary: {
       //main: "#2196f3", // Blue
@@ -29,7 +42,24 @@ const theme = createTheme({
   components: {
     // Customize other components as needed
     MuiCssBaseline: {
+      
+      
+
+
+    
+      defaultProps: {
+        sx: {
+          fontFamily: 'Roboto',
+        },
+      },
+
       styleOverrides: {
+        html: {
+          margin: 0,
+          padding: 0,
+        },
+       
+
         body: {
           margin: 0,
           padding: 0,

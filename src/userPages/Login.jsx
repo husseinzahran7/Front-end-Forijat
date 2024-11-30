@@ -90,7 +90,7 @@ function Login() {
             onChange={(e) => setPassword(e.target.value)}
           />
           {/* add the reCAPTCHA */}
-          <MyReCaptcha />
+          {/* <MyReCaptcha /> */}
 
 
           <Button

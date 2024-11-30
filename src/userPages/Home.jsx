@@ -23,9 +23,24 @@ const featuredCases = [
 ];
 
 const slides = [
-  "./src/images/charity-photo.jpeg",
-  'https://images.unsplash.com/photo-1587691592099-24045742c181?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+  // "./src/images/charity-photo.jpeg",
+  // 'https://images.unsplash.com/photo-1587691592099-24045742c181?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  // "https://i.pinimg.com/736x/c7/ce/60/c7ce60e236769cb9064c5a1114407771.jpg",
+  "https://images.unsplash.com/photo-1618620864043-896c2d11c7fc?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "https://images.unsplash.com/photo-1546450334-5a84ac3a1f0e?q=80&w=2074&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "https://images.unsplash.com/photo-1554702781-ce40d39ae66a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+
+
 ];
+
+
+const lang = {
+  AboutUs: "حولنا",
+  AboutUsDesc1: "امل هي منصة مخصصة لمساعدة الأفراد المثقلين بالديون والذين يواجهون خطر السجن. تهدف خدمتنا الرئيسية فريج إلى جمع التبرعات لسداد هذه الديون وضمان إطلاق سراح المحتاجين. نحن نؤمن بفرص الحياة الثانية وبقوة الدعم المجتمعي في تغيير الأرواح. من خلال الشفافية والثقة والإدارة الفعالة للتبرعات، نبني جسراً بين من يرغبون في العطاء ومن هم في أمس الحاجة إليه. انضموا إلينا في مهمتنا لنشر الأمل والكرامة والحرية للأفراد والعائلات في مجتمعنا.",
+  AboutUsDesc2: "من خلال الشفافية والثقة والإدارة الفعالة للتبرعات، نبني جسراً بين من يرغبون في العطاء ومن هم في أمس الحاجة إليه. انضموا إلينا في مهمتنا لنشر الأمل والكرامة والحرية للأفراد والعائلات في مجتمعنا.",
+  FeaturedCases:"من فرص التبرع"
+
+};
 
 function Home() {
   return (
@@ -60,19 +75,22 @@ function Home() {
       </Box>
 
       {/* Service Description */}
-      <Container maxWidth="md" sx={{ py: 8 }}>
-        <Typography variant="h3" gutterBottom color="primary">
-          About Our Service
+      <Container maxWidth="lg" sx={{ py: 8, direction: 'rtl' }}>
+        <Typography variant="h3" gutterBottom color="primary" dir="rtl">
+          {/* About Our Service */}
+          {lang.AboutUs}
         </Typography>
-        <Typography variant="body1" paragraph>
-          AMAL is a platform dedicated to helping individuals burdened by debt and facing imprisonment.
+        <Typography variant="body1" paragraph fontSize={20} dir="rtl">
+          {/* AMAL is a platform dedicated to helping individuals burdened by debt and facing imprisonment.
           Our key service, Forijat, aims to collect donations to pay off these debts and secure the release of those in need.
-          We believe in second chances and the power of community support to transform lives.
+          We believe in second chances and the power of community support to transform lives. */}
+          {lang.AboutUsDesc1}
         </Typography>
-        <Typography variant="body1" paragraph>
-          Through transparency, trust, and efficient management of donations, we create a bridge between those willing to give
+        <Typography variant="body1" paragraph fontSize={20} dir="rtl">
+          {/* Through transparency, trust, and efficient management of donations, we create a bridge between those willing to give
           and those in desperate need. Join us in our mission to bring hope, dignity, and freedom to individuals and families
-          across our community.
+          across our community. */}
+          {lang.AboutUsDesc2}
         </Typography>
       </Container>
 
@@ -80,7 +98,9 @@ function Home() {
       <Box sx={{ bgcolor: 'background.paper', py: 8 }}>
         <Container maxWidth="lg">
           <Typography variant="h3" gutterBottom color="primary" align="center">
-            Featured Cases
+
+            {/* Featured Cases */}
+            {lang.FeaturedCases}
           </Typography>
           <Grid container spacing={4}>
             {featuredCases.map((case_) => {
@@ -130,6 +150,8 @@ function Home() {
           </Box>
         </Container>
       </Box>
+
+      
 
       {/* Contact Us Section */}
       <Container maxWidth="md" sx={{ py: 8 }}>
@@ -182,7 +204,18 @@ function Home() {
             Send Message
           </Button>
         </Box>
+
+        
       </Container>
+      {/* Quote Section 2 */}
+      <Box sx={{
+        bgcolor: 'background.paper',
+        py: 12
+      }}>
+        <Container maxWidth="md">
+          <img src="https://ehsan.sa/assets/images/homepage/ahseno-ayah.svg" alt="Quote Image" style={{ maxWidth: '100%', height: 'auto', display: 'block', margin: '0 auto' }} />
+        </Container>
+      </Box>
     </Box>
   );
 }
