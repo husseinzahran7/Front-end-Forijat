@@ -12,6 +12,7 @@ import { Container, Typography, Grid, Card, CardContent, CardActions, Button, Li
  import ShareIcon from '@mui/icons-material/Share'
  import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 
+
 // This is a mock data array. In a real application, you would fetch this data from your API.
 const mockCases = [
   { id: 1, name: 'John Doe', amount: 5000, raised: 2500 },
@@ -67,6 +68,7 @@ function Cases() {
     setCurrentPage(newPage);
   };
 
+  
   const handleShareClick = (case_) => {
     setSelectedCase(case_);
     setShareDialogOpen(true);
