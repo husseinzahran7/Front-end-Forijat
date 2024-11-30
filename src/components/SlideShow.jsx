@@ -91,7 +91,7 @@ const SlideShow = ({ slides }) => {
             <Box
               sx={{
                 position: "absolute",
-                bottom: 10,
+                bottom: { xs: 20, md: 10 },
                 left: "50%",
                 transform: "translateX(-50%)",
               }}
@@ -101,12 +101,13 @@ const SlideShow = ({ slides }) => {
                   key={index}
                   style={{
                     display: "inline-block",
-                    width: "10px",
+                    width:  currentIndex === index ? "45px" : "25px",
                     height: "10px",
                     margin: "0 5px",
-                    borderRadius: "50%",
+                    borderRadius: "50px",
                     backgroundColor: currentIndex === index ? "black" : "gray",
                     cursor: "pointer",
+                    animation:currentIndex === index ?'dotsfadeIn 0.5s ease-in':(currentIndex -1 === index ?'dotsfadeBack 0.5s ease-in':"")
                   }}
                   onClick={() => setCurrentIndex(index)}
                 />
