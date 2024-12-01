@@ -10,7 +10,7 @@ function Layout({ children }) {
     
     <Box
 
-    sx={{mt:{xs:10,md:10},mb:0, display: 'flex', flexDirection: 'column', minHeight: '100vh',minWidth: '80vw', 
+    sx={{mt:{xs:4,md:4},mb:0, display: 'flex', flexDirection: 'column', minHeight: '100vh',minWidth: '80vw', 
     // border: '1px solid red'
      }}>
       <Box>

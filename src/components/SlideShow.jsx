@@ -1,6 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { Box, Button, Typography } from "@mui/material";
 
+
+const arContent={
+    welcome:"مرحبا بك في منصة امل",
+    description:[
+    "تبرعك يساهم في تغيير حياة شخص ما,  ",
+
+      "كل تبرع، مهما كان صغيراً، يترك أثراً كبيراً."
+    
+
+    ],
+    buttonLabel:"تبرع الان",
+
+}
+
 const SlideShow = ({ slides }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -75,7 +89,8 @@ const SlideShow = ({ slides }) => {
               component="h1"
               sx={{ animation: "fadeIn 1s ease-in-out" }}
             >
-              Welcome to AMAL
+              {arContent.welcome}
+              {/* Welcome to AMAL */}
             </Typography>
             <Typography
               variant="subtitle1"
@@ -84,7 +99,8 @@ const SlideShow = ({ slides }) => {
                 animation: "fadeIn2 2s ease-in-out",
               }}
             >
-              Empowering freedom through compassion and community support
+              {/* Empowering freedom through compassion and community support */}
+              {arContent.description}
             </Typography>
 
             {/* Display navigation dots */}
@@ -128,7 +144,8 @@ const SlideShow = ({ slides }) => {
                 animation: "fadeIn3 3s ease-in-out",
               }}
             >
-              Donate Now
+              {arContent.buttonLabel}
+              {/* Donate Now */}
             </Button>
           </Box>
         </Box>
