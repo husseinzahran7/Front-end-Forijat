@@ -2,7 +2,6 @@ import React from 'react'
 import { Container, Typography, Grid, Card, CardContent, CardActions, Button, LinearProgress, Box, IconButton, useTheme } from '@mui/material'
 import CircularProgress from '@mui/material/CircularProgress';
 import ShareIcon from '@mui/icons-material/Share'
-
 // This is a mock data array. In a real application, you would fetch this data from your API.
 const mockCases = [
   { id: 1, name: 'John Doe', amount: 5000, raised: 2500 },

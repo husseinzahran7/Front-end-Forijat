@@ -8,11 +8,14 @@ import {
   DialogContentText,
   TextField,
   DialogActions,
+  useTheme,
 } from '@mui/material'
 
 import ShareIcon from '@mui/icons-material/Share'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 import CardC from '../components/Card';
+import InfoIcon from '@mui/icons-material/Info';
+import TuneIcon from '@mui/icons-material/Tune';
 
 // This is a mock data array. In a real application, you would fetch this data from your API.
 const mockCases = [
@@ -60,7 +63,7 @@ const lang = {
 function Cases() {
   const [currentPage, setCurrentPage] = useState(1);
   const casesPerPage = 12; // Number of cases per page
-
+  const theme = useTheme();
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
   const [selectedCase, setSelectedCase] = useState(null);
 
@@ -68,7 +71,7 @@ function Cases() {
     setCurrentPage(newPage);
   };
 
-  
+
   const handleShareClick = (case_) => {
     setSelectedCase(case_);
     setShareDialogOpen(true);
@@ -98,11 +101,82 @@ function Cases() {
         Current Cases
       </Typography>
 
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.4)',
+          borderRadius: "5px",
+          overflow: "hidden",
+          mb: 5,
+          alignSelf: "center",
+        }}
+      >
+        {/* top */}
+        <Box sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          background: 'linear-gradient(to left, #182847, #009DDC)',
+          py: 1,
+          px: 2,
+        }}
+        >
+
+          <Button startIcon={<InfoIcon />} variant='contained'>
+            شروط الاستحقاق
+          </Button>
+          <Box>
+            <Typography color='white'>
+              فرص التبرع لمن صدر بحقهم حكم بالسجن؛ بسبب الحقوق المالية التي عليهم، للمساهمة في تفريج كربتهم
+            </Typography>
+          </Box>
+        </Box>
+        {/* bottom */}
+        <Box sx={{
+          display: "flex",
+          flexDirection: "row-reverse",
+          alignItems: "center",
+          justifyContent: "space-between",
+          py: 1,
+          px: 2
+        }}>
+          <Box sx={{
+            display: "flex",
+            alignItems: "center",
+            border: "1px solid Gray",
+            borderRadius:"5px",
+            px: 1,
+
+          }}>
+
+            <Button variant='contained'>
+              بحث
+            </Button>
+            <div dir="rtl">
+              <TextField id="outlined-basic" sx={{
+                '& .MuiOutlinedInput-root': {
+                  '& fieldset': {
+                    border: 'none', // Remove border
+                  },
+                },
+              }} type='number' placeholder='رقم الفاتورة ' />
+            </div>
+
+          </Box>
+
+          <Button startIcon={<TuneIcon />} variant='contained'>
+            Filter
+          </Button>
+        </Box>
+      </Box>
+
+
       <Grid container spacing={4}>
         {/* <CardC/> */}
         {currentCases.map((case_) => (
           <Grid item key={case_.id} xs={12} sm={6} md={6} lg={4} container justifyContent="center" >
-            <CardC id={case_.id} Story={ case_.story} totalAmount={case_.amount} raisedAmount={case_.raised} InvioceNumber={case_.invoiceNumber} handleShareClick={handleShareClick} case_={case_}/>
+            <CardC id={case_.id} Story={case_.story} totalAmount={case_.amount} raisedAmount={case_.raised} InvioceNumber={case_.invoiceNumber} handleShareClick={handleShareClick} case_={case_} />
           </Grid>
         ))}
       </Grid>
