@@ -15,6 +15,7 @@ import {
 import { Link as RouterLink, useLocation } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import { Gradient } from "@mui/icons-material";
 
 // const navItems = [
 //   { title: "Home", path: "/" },
@@ -35,6 +36,8 @@ const navItems = [
 const names = {
   ar: {
     logoName: "امل",
+    login:"تسجيل الدخول",
+    signup:"تسجيل "
   },
 
   en: {
@@ -64,7 +67,7 @@ function Navbar() {
           fontFamily: "Roboto",
           fontSize: "1.6rem",
           fontWeight: "bold",
-          // direction: "rtl",
+          
         }}
       >
         {names.ar.logoName}
@@ -111,7 +114,10 @@ function Navbar() {
   return (
     <>
       
-      <AppBar position="fixed" color="primary" elevation={6} sx={{direction:'rtl'}}>
+      <AppBar position="fixed" color="primary" elevation={6} sx={{direction:'rtl' ,
+        //  borderBottom:'5px solid gray', 
+        //  borderTop:'10px solid gray'
+         } }>
         {/* <Toolbar sx={{ justifyContent: "space-between" , bgcolor:'secondary.main'}}/> */}
         {/* <Box sx={{ py: 3, bgcolor: "secondary.main" }}></Box> */}
         <Toolbar
@@ -175,7 +181,12 @@ function Navbar() {
                   // add shadow when selected 
                   // boxShadow: item.selected ? '0px 2px 10px rgba(0, 0, 0, 0.2)' : 'none',
                   //  on hover add shadow
-                  '&:hover': {boxShadow: '0px 2px 10px rgba(0, 0, 0, 0.2)'
+                  '&:hover': {
+                    boxShadow: '0px 2px 10px rgba(0, 0, 0, 0.2)',
+                    borderBottom:  "solid 4px white" ,
+                    // add transaction
+                  transition: 'box-shadow 0.2s ease, border-bottom 0.2s ease'
+       
                   }
 
                 
@@ -190,18 +201,30 @@ function Navbar() {
               color="inherit"
               component={RouterLink}
               to="/login"
-              sx={{ color: "white" }}
+              sx={{ 
+                color: "white" ,
+                fontWeight: "bold",
+                fontSize: "1rem",
+                 bgcolor: "secondary.main"
+
+                // bgcolor: "linear-gradient(to right, #182847, #47689b)",
+                // gradient background color
+                  // background: 'linear-gradient(to right,   #009DDC,#182847)',
+
+                 }}
             >
-              Login
+              {/* Login */}
+              {names.ar.login}
             </Button>
-            <Button
+            {/* <Button
               color="inherit"
               component={RouterLink}
               to="/signup"
               sx={{ color: "white", bgcolor: "secondary.main" }}
             >
-              Sign Up
-            </Button>
+              {/* Sign Up */}
+              {/* {names.ar.signup} */}
+            {/* </Button> */} 
           </Box>
         </Toolbar>
       </AppBar>

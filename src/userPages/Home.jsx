@@ -171,23 +171,32 @@ function Home() {
       
 
       {/* Contact Us Section */}
-      <Container maxWidth="md" sx={{ py: 8 }}>
+      <Container maxWidth="md" sx={{ py: 8 , direction:'rtl' }}>
         <Typography variant="h3" gutterBottom color="primary">
-          Contact Us
+          {/* {"Contact Us"} */}
+          {"تواصل معنا"}
         </Typography>
         <Typography variant="body1" paragraph>
-          Have questions or need assistance? We're here to help. Reach out to us using the form below.
+          {/* {"Have questions or need assistance? We're here to help. Reach out to us using the form below."} */}
+          {"لديك أسئلة أو تحتاج إلى مساعدة؟ نحن هنا لمساعدتك. تواصل معنا باستخدام النموذج أدناه."}
+
         </Typography>
-        <Box component="form" noValidate sx={{ mt: 3 }}>
+        <Box component="form" noValidate sx={{ mt: 3  }}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
                 required
                 fullWidth
                 id="name"
-                label="Your Name"
+                // label="Your Name"
+                label="الاسم"
                 name="name"
                 autoComplete="name"
+                // dir="rtl" // Set direction to RTL
+                // InputLabelProps={{
+                //   style: { textAlign: 'right' },
+                // }}
+                
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -195,7 +204,8 @@ function Home() {
                 required
                 fullWidth
                 id="email"
-                label="Email Address"
+                // label="Email Address"
+                label="البريد الالكتروني"
                 name="email"
                 autoComplete="email"
               />
@@ -205,7 +215,8 @@ function Home() {
                 required
                 fullWidth
                 id="message"
-                label="Your Message"
+                // label="Your Message"
+                label="رسالتك"
                 name="message"
                 multiline
                 rows={4}
@@ -218,7 +229,8 @@ function Home() {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
-            Send Message
+            {/* {"Send Message"} */}
+            {"إرسال الرسالة"}
           </Button>
         </Box>
 

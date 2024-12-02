@@ -8,6 +8,25 @@ import "./App.css";
 import User from "./userPages/User";
 
 const theme = createTheme({
+  // direction: 'rtl',
+  // components: {
+  //   MuiTypography: {
+  //     styleOverrides: {
+  //       root: {
+  //         direction: 'rtl',
+  //         textAlign: 'right',
+  //       }
+  //     }
+  //   },
+  //   MuiListItem: {
+  //     styleOverrides: {
+  //       root: {
+  //         direction: 'rtl',
+  //         textAlign: 'right',
+  //       }
+  //     }
+  //   }
+  // },
   // padding and margin 0
   typography: {
     fontFamily: ["Roboto", "sans-serif"].join(","),

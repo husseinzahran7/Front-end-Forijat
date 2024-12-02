@@ -1,45 +1,49 @@
-import React, { useState } from 'react';
-import { Container, Typography, TextField, Button, Box, Link, Paper } from '@mui/material';
-import { Link as RouterLink } from 'react-router-dom';
-import MyReCaptcha from '../components/ReCAPTCHA';
-import LoginIcon from '@mui/icons-material/Login';
+import React, { useState } from "react";
+import {
+  Container,
+  Typography,
+  TextField,
+  Button,
+  Box,
+  Link,
+  Paper,
+  CircularProgress,
+} from "@mui/material";
+import { Link as RouterLink } from "react-router-dom";
+import MyReCaptcha from "../components/ReCAPTCHA";
+import LoginIcon from "@mui/icons-material/Login";
 
 function Signup() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState(""); // State for error message
 
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState(''); // State for error message
-
- 
-
+  const [isLoading, setIsLoading] = useState(false);
 
 
   // reCAPTCHA
   const [verified, setVerified] = useState(false);
 
   const [formData, setFormData] = useState({
-    age: '',
+    age: "",
   });
-
-
 
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
-    setErrorMessage(''); // Clear error on password change
+    setErrorMessage(""); // Clear error on password change
   };
 
   const handleConfirmPasswordChange = (event) => {
     setConfirmPassword(event.target.value);
     // Validate password match
     if (event.target.value !== password) {
-      setErrorMessage('Passwords do not match.');
+      setErrorMessage("Passwords do not match.");
     } else {
-      setErrorMessage(''); // Clear error on match
+      setErrorMessage(""); // Clear error on match
     }
   };
-
 
   // Function to handle input changes for email
   const handleEmailChange = (event) => {
@@ -48,46 +52,60 @@ function Signup() {
     // Basic email validation using regular expression
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(event.target.value)) {
-      setErrorMessage('Please enter a valid email address.');
+      setErrorMessage("Please enter a valid email address.");
     } else {
-      setErrorMessage(''); // Clear error on valid email
+      setErrorMessage(""); // Clear error on valid email
     }
   };
-
 
   // Function to handle input changes for age
 
   const handleInputChange = (event) => {
     // Validate input to only allow numbers
-    const newAge = event.target.value.replace(/[^0-9]/g, ''); // Remove non-numeric characters
+    const newAge = event.target.value.replace(/[^0-9]/g, ""); // Remove non-numeric characters
 
     setFormData({ ...formData, age: newAge });
   };
 
-
-
   const handleSubmit = (event) => {
     event.preventDefault();
+    setIsLoading(true);
+
     // TODO: Implement signup logic
 
     // Check if reCAPTCHA is verified before submitting the form
     if (verified) {
       // Submit the form data
-      console.log('Form submitted:', formData);
+      console.log("Form submitted:", formData);
     } else {
-      alert('Please verify the reCAPTCHA');
+      alert("Please verify the reCAPTCHA");
     }
+    setTimeout(() => {
+      setIsLoading(false);
+      // Handle successful login or display error messages
+    }, 2000);
 
-    console.log('Signup attempt with:', { name, email, password });
+    console.log("Signup attempt with:", { name, email, password });
   };
 
   return (
     <Container component="main" maxWidth="xs">
-      <Paper elevation={3} sx={{ mt: 8, p: 4, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <Paper
+        elevation={3}
+        sx={{
+          my: 8,
+          p: 4,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
 
-        <LoginIcon sx={{ fontSize: '48px' }}/>
+          boxShadow: `0 0 0 2px linear-gradient(to right, #182847, #009DDC), 0 4px 10px rgba(0, 0, 0, 0.1)`,
+        }}
+      >
+        <LoginIcon sx={{ fontSize: "48px" }} />
         <Typography component="h1" variant="h5" color="primary">
-          Sign up for AMAL
+          {/* Sign up for AMAL */}
+         {" انشاء حساب في منصة امل"}
         </Typography>
         <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
           <TextField
@@ -112,11 +130,9 @@ function Signup() {
             name="email"
             autoComplete="email"
             value={email}
-            onChange={handleEmailChange}   
-
+            onChange={handleEmailChange}
             error={!!errorMessage} // Set error if error message exists
             helperText={errorMessage} // Display error message
-     
           />
           {/* password */}
           <TextField
@@ -129,7 +145,6 @@ function Signup() {
             id="password"
             autoComplete="new-password"
             value={password}
-
             onChange={handlePasswordChange}
             error={!!errorMessage} // Set error if error message exists
             helperText={errorMessage} // Display error message
@@ -144,13 +159,10 @@ function Signup() {
             type="password"
             id="confirmPassword"
             autoComplete="new-password"
-
             value={confirmPassword}
-            onChange={handleConfirmPasswordChange}   
-
+            onChange={handleConfirmPasswordChange}
             error={!!errorMessage} // Set error if error message exists
             helperText={errorMessage} // Display error message
-
           />
           {/* age */}
           <TextField
@@ -164,11 +176,22 @@ function Signup() {
             autoComplete="age"
             value={formData.age}
             onChange={handleInputChange} // Use the custom handler
-        error={formData.age.length > 0 && isNaN(formData.age)} // Set error if non-numeric
-        helperText={formData.age.length > 0 && isNaN(formData.age) ? 'Please enter a valid number for age' : ''} // Display error message
-      />
+            error={formData.age.length > 0 && isNaN(formData.age)} // Set error if non-numeric
+            helperText={
+              formData.age.length > 0 && isNaN(formData.age)
+                ? "Please enter a valid number for age"
+                : ""
+            } // Display error message
+          />
           {/* gender radio button */}
-          <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', mt: 2 }}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              mt: 2,
+            }}
+          >
             <Typography variant="body1" component="label" htmlFor="gender">
               Gender:
             </Typography>
@@ -211,12 +234,23 @@ function Signup() {
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
+            disabled={isLoading || !password || !confirmPassword || !email || !name || !formData.age}
+            onClick={handleSubmit}
           >
-            Sign Up
+            {isLoading ? <CircularProgress size={24} />  : "انشاء حساب"}
+            
+
           </Button>
-          <Box sx={{ textAlign: 'center' }}>
-            <Link component={RouterLink} to="/login" variant="body2" color="secondary">
-              {"Already have an account? Log In"}
+          <Box sx={{ textAlign: "center" }}>
+            <Link
+              component={RouterLink}
+              to="/login"
+              variant="body2"
+              color="secondary"
+            >
+              {/* {"Already have an account? Log In"} */}
+              {"لديك حساب بالفعل؟ سجل الدخول"}
+
             </Link>
           </Box>
         </Box>
@@ -226,4 +260,3 @@ function Signup() {
 }
 
 export default Signup;
-

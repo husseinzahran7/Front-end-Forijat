@@ -28,15 +28,15 @@ function Footer() {
 
             <Grid item xs={12} sm={6} md={6} >
               <Typography variant="body2" align="center" >
-                <Link color="inherit" href="/about" sx={{textDecoration: 'none'}}>
+                {/* <Link color="inherit" href="/about" sx={{textDecoration: 'none'}}>
                   About
                 </Link>
-                {' | '}
+                {' | '} */}
                 <Link color="inherit" href="/privacy" sx={{textDecoration: 'none'}}>
                   Privacy Policy
                 </Link>
                 {' | '}
-                <Link color="inherit" href="/terms" sx={{textDecoration: 'none'}}>
+                <Link color="inherit" href="/TermsOfService" sx={{textDecoration: 'none'}}>
                   Terms of Service
                 </Link>
               </Typography>
