@@ -18,6 +18,10 @@ import {
   TextField,
   DialogActions,
   useTheme,
+  ListItem,
+  ListItemText,
+  List,
+  Paper,
 } from "@mui/material";
 
 import ShareIcon from "@mui/icons-material/Share";
@@ -25,6 +29,7 @@ import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import CardC from "../components/Card";
 import InfoIcon from "@mui/icons-material/Info";
 import TuneIcon from "@mui/icons-material/Tune";
+import GavelIcon from "@mui/icons-material/Gavel";
 
 // This is a mock data array. In a real application, you would fetch this data from your API.
 const mockCases = [
@@ -183,10 +188,20 @@ const mockCases = [
   },
 ];
 
+// for the pop up
+const eligibilityConditions = [
+  "أن يكون المطالب محبوساً بالمملكة (ويستثنى من أفرج عنه مؤقتاً بالأمر الملكي الخاص بجائحة كورونا).",
+  "ألا تكون المطالبة ناشئة عن قضية جنائية (ويستثنى من ذلك المطالبات الناشئة عن الحق الخاص في قضايا أخرى).",
+  "ألا تكون المطالبة تمثل غرامة مستحقة للدولة.",
+  "ألا تكون المطالبة ناشئة عن حادث سير وقع بسبب مخالفة مرورية تعرض السلامة العامة للخطر.",
+  "ألا يكون المطالب قد استفاد من خدمة فرجت خلال الفترة الماضية.",
+];
+
 const lang = {
   Name: "",
   Btn: "تبرع",
 };
+
 
 function Cases() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -207,6 +222,24 @@ function Cases() {
   const handleShareClose = () => {
     setShareDialogOpen(false);
   };
+
+  // for the pop up
+
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+
+  // for filter 
+  
+
+
 
   // used for ShareLink
   const pathLink = window.location.href;
@@ -265,10 +298,88 @@ function Cases() {
           <Button
             startIcon={<InfoIcon sx={{ color: "primary.main" }} />}
             variant="contained"
-            sx={{ borderRadius: "50px", bgcolor: "white" ,color:"primary.main" ,fontWeight:"bold",fontSize:"1rem" }}
+            sx={{
+              borderRadius: "50px",
+              bgcolor: "white",
+              color: "primary.main",
+              fontWeight: "bold",
+              fontSize: "1rem",
+            }}
+            onClick={handleClickOpen}
           >
             {"شروط الاستحقاق"}
           </Button>
+
+          <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+            fullWidth
+            maxWidth="sm"
+            dir="rtl"
+            // background color white
+            sx={{
+              "& .MuiDialog-paper": {
+                backgroundColor: "white", // This sets the background color to white
+                borderRadius: 3,
+              },
+            }}
+          >
+            {/* add icon */}
+            {/* gavel icon */}
+            <GavelIcon
+              sx={{
+                fontSize: "48px",
+                color: "primary.main",
+                mx: "auto",
+                my: 2,
+              }}
+            />
+
+            <DialogTitle
+              id="alert-dialog-title"
+              sx={{ direction: "rtl", fontWeight: "bold", textAlign: "center" }}
+            >
+              {"شروط الاستحقاق المعتمدة من اللجنة الإشرافية"}
+            </DialogTitle>
+
+            <DialogContent>
+              <Paper
+                elevation={0}
+                sx={{
+                  borderRadius: "10px",
+                }}
+              >
+                {eligibilityConditions.map((condition, index) => (
+                  <Typography
+                    key={index}
+                    variant="body1"
+                    sx={{
+                      p: 2,
+                      // m: 1,
+                      direction: "rtl",
+                      textAlign: "right",
+                    }}
+                  >
+                    • {condition}
+                  </Typography>
+                ))}
+              </Paper>
+            </DialogContent>
+
+            <DialogActions>
+              <Button
+                onClick={handleClose}
+                variant="contained"
+                color="primary"
+                fullWidth
+                sx={{ borderRadius: "50px" }}
+              >
+                {"اغلاق"}
+              </Button>
+            </DialogActions>
+          </Dialog>
 
           <Box>
             <Typography color="white">
@@ -413,7 +524,6 @@ function Cases() {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleShareClose} color="primary">
-            {/* {"Close"} */}
             {"اغلاق"}
           </Button>
         </DialogActions>

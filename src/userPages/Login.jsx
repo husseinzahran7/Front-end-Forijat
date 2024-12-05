@@ -135,8 +135,18 @@ function Login() {
             sx={{ mt: 3, mb: 2 }}
           >
             {isLoading ? <CircularProgress size={24} />  : "تسجيل الدخول"}
-            {/* تسجيل الدخول */}
+            
           </Button>
+          <Box sx={{ textAlign: "center" }}>
+            <Link
+              component={RouterLink}
+              to="/forgotpassword"
+              variant="body2"
+              color="secondary"
+            >
+              {"هل نسيت كلمة المرور؟"}
+            </Link>
+          </Box>
           <Box sx={{ textAlign: "center" }}>
             <Link
               component={RouterLink}

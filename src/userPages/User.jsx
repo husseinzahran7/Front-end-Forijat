@@ -13,6 +13,8 @@ import Signup from './Signup'
 import PrivacyPolicy from './PrivacyPolicy'
 import TermsOfService from './TermsOfService'
 import DonationPage from './Donate'
+import ForgotPassword from './ForgotPassword'
+import Checkout from './Checkout'
 
 
 
@@ -30,6 +32,8 @@ const User = () => {
                 <Route path="/privacy" element={<PrivacyPolicy/>} />
                 <Route path="/TermsOfService" element={<TermsOfService/>} />
                 <Route path="/Donate/*" element={<DonationPage/>} />
+                <Route path="/ForgotPassword" element={<ForgotPassword/>} />
+                <Route path="/Checkout" element={<Checkout/>} />
                 
                 
             {/* <Route path="/cases" element={<Cases />} /> */}
