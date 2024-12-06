@@ -22,6 +22,10 @@ import {
   ListItemText,
   List,
   Paper,
+  InputLabel,
+  Select,
+  MenuItem,
+  FormControl,
 } from "@mui/material";
 
 import ShareIcon from "@mui/icons-material/Share";
@@ -30,6 +34,7 @@ import CardC from "../components/Card";
 import InfoIcon from "@mui/icons-material/Info";
 import TuneIcon from "@mui/icons-material/Tune";
 import GavelIcon from "@mui/icons-material/Gavel";
+import CloseIcon from '@mui/icons-material/Close';
 
 // This is a mock data array. In a real application, you would fetch this data from your API.
 const mockCases = [
@@ -205,6 +210,7 @@ const lang = {
 
 function Cases() {
   const [currentPage, setCurrentPage] = useState(1);
+  const [filter, setFilter] = useState(false);
   const casesPerPage = 12; // Number of cases per page
   const theme = useTheme();
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
@@ -237,7 +243,7 @@ function Cases() {
 
 
   // for filter 
-  
+
 
 
 
@@ -250,7 +256,7 @@ function Cases() {
 
       // In a real app, this would be your actual case detail URL
       // const shareLink = `https://Amal.com/cases/${selectedCase.id}`;
-      const shareLink = `${pathLink}/cases/${selectedCase.id}`;
+      const shareLink = `${pathLink}/donate/${selectedCase.invoiceNumber}`;
       navigator.clipboard.writeText(shareLink);
       // Optionally, show a snackbar or toast to confirm copying
     }
@@ -259,6 +265,15 @@ function Cases() {
   const indexOfLastCase = currentPage * casesPerPage;
   const indexOfFirstCase = indexOfLastCase - casesPerPage;
   const currentCases = mockCases.slice(indexOfFirstCase, indexOfLastCase);
+
+  const filters = [
+    { key: "prisonArea", label: "منطقة السجن", options: ["الكل", "الرياض", "جدة", "مكة", "الدمام"] },
+    { key: "nationality", label: "الجنسية", options:  ["الكل", "سعودي", "مصري", "سوري", "لبناني", "فلسطيني", "أردني", "عراقي", "جزائري", "تونسي", "مغربي"] },
+    { key: "gender", label: "الجنس", options: ["الكل","ذكر", "أنثى",] },
+    { key: "maritalStatus", label: "الحالة الإجتماعية", options: ["الكل","أعزب","متزوج","عزباء","متزوجة","غير متزوجة","مطلقة"] },
+    { key: "donationType", label: "نوع التبرع", options: ["الكل","صدقة","زكاة",] },
+    { key: "caseCount", label: "عدد القضايا", options: ["الكل","1","2","3","4","5","5 أو أكثر"] },
+  ];
 
   return (
     <Container maxWidth="lg" sx={{ my: 6 }}>
@@ -410,52 +425,162 @@ function Cases() {
           </Box>
         </Box>
         {/* bottom */}
-        <Box
-          sx={{
+
+
+        {filter ? (<>
+          <Box sx={{
             display: "flex",
-            flexDirection: "row-reverse",
-            alignItems: "center",
-            justifyContent: "space-between",
-            py: 1,
-            px: 2,
-          }}
-        >
+            flexDirection: "column"
+          }}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row-reverse",
+                alignItems: "center",
+                justifyContent: "space-between",
+                py: 1,
+                px: 2,
+              }}
+            >
+
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  px: 1,
+                }}
+              >
+
+                <div dir="rtl">
+                  <Box>
+                    <Typography
+                      sx={{
+                        fontSize: { xs: "1rem", sm: "1.2rem", md: "1.5rem" },
+                        fontWeight: 800,
+                        minWidth: "60px",
+                        textAlign: "center",
+                      }}
+                    >
+                      {"التصفية"}
+                    </Typography>
+                  </Box>
+                </div>
+              </Box>
+
+              <Button
+                startIcon={<CloseIcon />}
+                variant="contained"
+                sx={{ borderRadius: "50px" }}
+                onClick={() => setFilter(false)}
+              >
+                {"إغلاق"}
+              </Button>
+            </Box>
+
+            <Grid container spacing={4} sx={{ px: 2, py: 1 }}>
+              {/* Prison Area Select */}
+              {filters.map((filter, index) => (
+                <Grid
+                  key={index} // Use index or a unique key based on the filter
+                  item
+                  xs={12}
+                  sm={6}
+                  md={6}
+                  lg={4}
+                  container
+                  justifyContent="center"
+                >
+                  <FormControl fullWidth>
+                    <InputLabel id={`${filter.key}-label`}>{filter.label}</InputLabel>
+                    <Select
+                      labelId={`${filter.key}-label`}
+                      id={`${filter.key}-select`}
+                      label={filter.label}
+                      sx={{ direction: "rtl" }} 
+                      MenuProps={{
+                        PaperProps: {
+                          style: {
+                            maxHeight: 200,  // Set the height for the dropdown
+                            overflowY: 'auto',  // Enable vertical scrolling
+                          },
+                        },
+                      }}
+                    >
+                      {filter.options.map((option, optionIndex) => (
+                        <MenuItem key={optionIndex} value={option}>
+                          {option}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Grid>
+              ))}
+              
+            </Grid>
+            <Box 
+            sx={{
+              display:"flex",
+              flexDirection:"row-reverse",
+              alignItems:"center",
+              justifyContent:"space-between",
+              px:2,
+              py:1
+            }}
+            >
+              <Button variant="contained">تصفية</Button>
+              <Button variant="outlined">مسح الكل</Button>
+            </Box>
+          </Box>
+        </>) : (<>
           <Box
             sx={{
               display: "flex",
+              flexDirection: "row-reverse",
               alignItems: "center",
-              border: "1px solid Gray",
-              borderRadius: "5px",
-              px: 1,
+              justifyContent: "space-between",
+              py: 1,
+              px: 2,
             }}
           >
-            <Button variant="contained" sx={{ borderRadius: "50px" }}>
-              {"بحث"}
-            </Button>
-            <div dir="rtl">
-              <TextField
-                id="outlined-basic"
-                sx={{
-                  "& .MuiOutlinedInput-root": {
-                    "& fieldset": {
-                      border: "none", // Remove border
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                border: "1px solid Gray",
+                borderRadius: "5px",
+                px: 1,
+              }}
+            >
+              <Button variant="contained" sx={{ borderRadius: "50px" }}>
+                {"بحث"}
+              </Button>
+              <div dir="rtl">
+                <TextField
+                  id="outlined-basic"
+                  sx={{
+                    "& .MuiOutlinedInput-root": {
+                      "& fieldset": {
+                        border: "none", // Remove border
+                      },
                     },
-                  },
-                }}
-                type="number"
-                placeholder="رقم الفاتورة "
-              />
-            </div>
-          </Box>
+                  }}
+                  type="number"
+                  placeholder="رقم الفاتورة "
+                />
+              </div>
+            </Box>
 
-          <Button
-            startIcon={<TuneIcon />}
-            variant="contained"
-            sx={{ borderRadius: "50px" }}
-          >
-            {"تصفية"}
-          </Button>
-        </Box>
+            <Button
+              startIcon={<TuneIcon />}
+              variant="contained"
+              sx={{ borderRadius: "50px" }}
+              onClick={() => setFilter(true)}
+            >
+              {"تصفية"}
+            </Button>
+          </Box>
+        </>)}
+
       </Box>
 
       <Grid container spacing={4}>
@@ -512,7 +637,7 @@ function Cases() {
             type="text"
             fullWidth
             variant="outlined"
-            value={selectedCase ? `${pathLink}/${selectedCase.id}` : ""}
+            value={selectedCase ? `${pathLink}/${selectedCase.invoiceNumber}` : ""}
             InputProps={{
               endAdornment: (
                 <IconButton onClick={copyShareLink}>

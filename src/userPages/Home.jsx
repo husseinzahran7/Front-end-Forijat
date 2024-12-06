@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Container,
   Typography,
@@ -9,19 +9,49 @@ import {
   CardContent,
   CardActions,
   TextField,
-  LinearProgress
+  LinearProgress,
+  Dialog,
+  DialogTitle,
+  DialogContentText,
+  DialogContent,
+  IconButton,
+  DialogActions
 } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import SlideShow from '../components/SlideShow';
+import CardC from '../components/Card';
+import { X } from '@mui/icons-material';
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+
 // import { Image } from '@mui/icons-material';
 // import {CardC} from '../components/Card';
 
 
 // Mock data for featured cases
-const featuredCases = [
-  { id: 1, name: 'Ahmed Ali', amount: 5000, raised: 2500, story: 'Ahmed needs help to pay off his medical debts.' },
-  { id: 2, name: 'Fatima Hassan', amount: 7500, raised: 3000, story: 'Fatima is struggling with legal fees after a wrongful arrest.' },
-  { id: 3, name: 'Omar Khalid', amount: 3000, raised: 1000, story: 'Omar needs assistance to clear his business debts and avoid imprisonment.' },
+const featuredCases = [{
+  id: 1,
+  name: "John Doe",
+  amount: 5000,
+  raised: 2500,
+  invoiceNumber: "10001",
+  story: "John's inspiring journey to overcome challenges.",
+},
+{
+  id: 2,
+  name: "Jane Smith",
+  amount: 7500,
+  raised: 3000,
+  invoiceNumber: "10002",
+  story: "Jane is striving to build a better future for her family.",
+},
+{
+  id: 3,
+  name: "Bob Johnson",
+  amount: 3000,
+  raised: 1000,
+  invoiceNumber: "10003",
+  story: "Bob needs support for his small business dream.",
+},
 ];
 
 const slides = [
@@ -29,9 +59,9 @@ const slides = [
   // 'https://images.unsplash.com/photo-1587691592099-24045742c181?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   // "https://i.pinimg.com/736x/c7/ce/60/c7ce60e236769cb9064c5a1114407771.jpg",
   "https://images.unsplash.com/photo-1618620864043-896c2d11c7fc?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  
-"https://img.freepik.com/free-photo/faith-christian-concept-spiritual-prayer-hands-sun-shine_1150-9112.jpg?t=st=1733002045~exp=1733005645~hmac=1b8a29204afc2beb8dd2f837aa9c1ccab06c877a68225dd8ab078e62c7d9b501&w=996",
-"https://images.unsplash.com/photo-1500206329404-5057e0aefa48?q=80&w=1776&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+
+  "https://img.freepik.com/free-photo/faith-christian-concept-spiritual-prayer-hands-sun-shine_1150-9112.jpg?t=st=1733002045~exp=1733005645~hmac=1b8a29204afc2beb8dd2f837aa9c1ccab06c877a68225dd8ab078e62c7d9b501&w=996",
+  "https://images.unsplash.com/photo-1500206329404-5057e0aefa48?q=80&w=1776&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   // "https://images.unsplash.com/photo-1546450334-5a84ac3a1f0e?q=80&w=2074&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   // "https://images.unsplash.com/photo-1554702781-ce40d39ae66a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   "https://img.freepik.com/free-photo/teenage-girl-with-praying-sunny-nature_1150-7219.jpg?t=st=1733002105~exp=1733005705~hmac=0935642d7530423949a41caeac137d455c9fc1ca93c4b4302c142bf7ad68537f&w=996",
@@ -44,11 +74,59 @@ const lang = {
   AboutUs: "حولنا",
   AboutUsDesc1: "امل هي منصة مخصصة لمساعدة الأفراد المثقلين بالديون والذين يواجهون خطر السجن. تهدف خدمتنا الرئيسية إلى جمع التبرعات لسداد هذه الديون وضمان إطلاق سراح المحتاجين. نحن نؤمن بفرص الحياة الثانية وبقوة الدعم المجتمعي في تغيير الأرواح. من خلال الشفافية والثقة والإدارة الفعالة للتبرعات، نبني جسراً بين من يرغبون في العطاء ومن هم في أمس الحاجة إليه. انضموا إلينا في مهمتنا لنشر الأمل والكرامة والحرية للأفراد والعائلات في مجتمعنا.",
   AboutUsDesc2: "من خلال الشفافية والثقة والإدارة الفعالة للتبرعات، نبني جسراً بين من يرغبون في العطاء ومن هم في أمس الحاجة إليه. انضموا إلينا في مهمتنا لنشر الأمل والكرامة والحرية للأفراد والعائلات في مجتمعنا.",
-  FeaturedCases:"من فرص التبرع",
+  FeaturedCases: "من فرص التبرع",
   ViewAllCases: "عرض جميع التبرعات",
 };
 
 function Home() {
+  const [shareDialogOpen, setShareDialogOpen] = useState(false);
+  const [selectedCase, setSelectedCase] = useState(null);
+
+  const handlePageChange = (event, newPage) => {
+    setCurrentPage(newPage);
+  };
+
+  const handleShareClick = (case_) => {
+    setSelectedCase(case_);
+    setShareDialogOpen(true);
+  };
+
+  const handleShareClose = () => {
+    setShareDialogOpen(false);
+  };
+
+  // for the pop up
+
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+
+  // for filter 
+
+
+
+
+  // used for ShareLink
+  const pathLink = window.location.href;
+
+  const copyShareLink = () => {
+    if (selectedCase) {
+      // Change this when deploy with your URL
+
+      // In a real app, this would be your actual case detail URL
+      // const shareLink = `https://Amal.com/cases/${selectedCase.id}`;
+      const shareLink = `${pathLink}/cases/${selectedCase.id}`;
+      navigator.clipboard.writeText(shareLink);
+      // Optionally, show a snackbar or toast to confirm copying
+    }
+  };
   return (
     <Box>
       {/* Banner Section */}
@@ -102,76 +180,109 @@ function Home() {
 
       {/* Featured Cases Section */}
       <Box sx={{ bgcolor: 'background.paper', py: 8 }}>
-        <Container maxWidth="md">
+        <Container maxWidth="lg">
           <Typography variant="h3" gutterBottom color="primary" align="center">
 
             {/* Featured Cases */}
             {lang.FeaturedCases}
           </Typography>
 
-          
 
 
-          <Grid container spacing={4}>
+
+          <Grid container spacing={4} >
             {featuredCases.map((case_) => {
-              const progress = (case_.raised / case_.amount) * 100;
               return (
-                <Grid item key={case_.id} xs={12} sm={6} md={4}>
-                  <Card>
-                    <CardContent>
-                      <Typography gutterBottom variant="h5" component="div">
-                        {case_.name}
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary" paragraph>
-                        {case_.story}
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        Amount Needed: ${case_.amount}
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        Amount Raised: ${case_.raised}
-                      </Typography>
-                      <LinearProgress
-                        variant="determinate"
-                        value={progress}
-                        sx={{ mt: 2, mb: 1 }}
-                      />
-                      <Typography variant="body2" color="text.secondary" align="right">
-                        {progress.toFixed(0)}%
-                      </Typography>
-                    </CardContent>
-                    <CardActions>
-                      <Button size="small" color="primary" component={RouterLink} to={`/cases/${case_.id}`}>
-                        Learn More
-                      </Button>
-                      <Button size="small" color="primary" component={RouterLink} to={`/donate/${case_.id}`}>
-                        Donate
-                      </Button>
-                    </CardActions>
-                  </Card>
+                <Grid
+                  item
+                  key={case_.id}
+                  xs={12}
+                  sm={6}
+                  md={6}
+                  lg={4}
+                  container
+                  justifyContent="center"
+                >
+                  <CardC
+                    id={case_.id}
+                    Story={case_.story}
+                    totalAmount={case_.amount}
+                    raisedAmount={case_.raised}
+                    InvioceNumber={case_.invoiceNumber}
+                    handleShareClick={handleShareClick}
+                    case_={case_}
+
+                  />
                 </Grid>
               );
             })}
           </Grid>
 
+          {/* Share Dialog */}
+          <Dialog
+            open={shareDialogOpen}
+            onClose={handleShareClose}
+            aria-labelledby="share-dialog-title"
+            dir="rtl"
+          >
+            <DialogTitle id="share-dialog-title">
+              {/* {"Share Case"} */}
+              {"مشاركة حالة"}
+            </DialogTitle>
+            <DialogContent
+            // dir='rtl'
+            >
+              <DialogContentText>
+                {/* {"Share this case with others"} */}
+                {"شارك الحالة مع الاخرين."}
+              </DialogContentText>
+              <TextField
+                autoFocus
+                margin="dense"
+                id="share-link"
+                // label="Share Link"
+                label="رابط المشاركة"
+                dir="ltr"
+                type="text"
+                fullWidth
+                variant="outlined"
+                value={selectedCase ? `${pathLink}/${selectedCase.invoiceNumber}` : ""}
+                InputProps={{
+                  endAdornment: (
+                    <IconButton onClick={copyShareLink}>
+                      <ContentCopyIcon />
+                    </IconButton>
+                  ),
+                }}
+              />
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleShareClose} color="primary">
+                {"اغلاق"}
+              </Button>
+            </DialogActions>
+          </Dialog>
 
 
-          <Box sx={{ textAlign: 'center', mt: 4 ,
+
+
+          <Box sx={{
+            textAlign: 'center', mt: 4,
             // 
-              }}>
-            <Button variant="contained" color="primary" size="large" component={RouterLink} to="/cases" sx={{fontWeight:'800' , fontSize:'1.1rem'}}>
+          }}>
+            <Button variant="contained" color="primary" size="large" component={RouterLink} to="/cases" sx={{ fontWeight: '800', fontSize: '1.1rem' }}>
               {/* View All Cases */}
               {lang.ViewAllCases}
-              
+
             </Button>
           </Box>
         </Container>
       </Box>
 
-      
+
 
       {/* Contact Us Section */}
-      <Container maxWidth="md" sx={{ py: 8 , direction:'rtl' }}>
+      <Container maxWidth="md" sx={{ py: 8, direction: 'rtl' }}>
         <Typography variant="h3" gutterBottom color="primary">
           {/* {"Contact Us"} */}
           {"تواصل معنا"}
@@ -181,7 +292,7 @@ function Home() {
           {"لديك أسئلة أو تحتاج إلى مساعدة؟ نحن هنا لمساعدتك. تواصل معنا باستخدام النموذج أدناه."}
 
         </Typography>
-        <Box component="form" noValidate sx={{ mt: 3  }}>
+        <Box component="form" noValidate sx={{ mt: 3 }}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -192,11 +303,11 @@ function Home() {
                 label="الاسم"
                 name="name"
                 autoComplete="name"
-                // dir="rtl" // Set direction to RTL
-                // InputLabelProps={{
-                //   style: { textAlign: 'right' },
-                // }}
-                
+              // dir="rtl" // Set direction to RTL
+              // InputLabelProps={{
+              //   style: { textAlign: 'right' },
+              // }}
+
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -234,7 +345,7 @@ function Home() {
           </Button>
         </Box>
 
-        
+
       </Container>
       {/* Quote Section 2 */}
       <Box sx={{
