@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -11,33 +11,28 @@ import {
   ListItem,
   ListItemText,
   Container,
+  MenuItem,
+  Menu,
 } from "@mui/material";
-import { Link as RouterLink, useLocation } from "react-router-dom";
+import { Link as RouterLink, useLocation, useNavigate } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import { Gradient } from "@mui/icons-material";
-
-// const navItems = [
-//   { title: "Home", path: "/" },
-//   { title: "Cases", path: "/cases" },
-//   { title: "Donate", path: "/donate" },
-//   { title: "Dashboard", path: "/dashboard" },
-// ];
+// import { Gradient } from "@mui/icons-material";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 const navItems = [
   { title: "الرئيسية ", path: "/", selected: false }, // Home in Arabic
   { title: "الحالات ", path: "/cases", selected: false }, // Cases in Arabic
   { title: "التبرع ", path: "/subscription", selected: false }, // Donate in Arabic
- // { title: "لوحة التحكم", path: "/dashboard", selected: false }, // Dashboard in Arabic
- 
-
+  // { title: "لوحة التحكم", path: "/dashboard", selected: false }, // Dashboard in Arabic
 ];
 
 const names = {
   ar: {
     logoName: "امل",
-    login:"تسجيل الدخول",
-    signup:"تسجيل "
+    login: "تسجيل الدخول",
+    signup: "تسجيل ",
   },
 
   en: {
@@ -49,6 +44,12 @@ function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
 
+  //
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userEmail, setUserEmail] = useState("");
+  const [anchorEl, setAnchorEl] = useState(null);
+  const navigate = useNavigate();
+
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -57,8 +58,47 @@ function Navbar() {
     item.selected = item.path === location.pathname;
   });
 
+  // Check login status on component mount
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      const userData = JSON.parse(storedUser);
+      setIsLoggedIn(true);
+      setUserEmail(userData.email);
+    }
+  }, []);
+
+  // Update selected nav items
+  navItems.forEach((item) => {
+    item.selected = item.path === location.pathname;
+  });
+
+  const handleUserMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleUserMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    setIsLoggedIn(false);
+    setUserEmail("");
+    setAnchorEl(null);
+    navigate("/"); // Redirect to home page
+  };
+
+  const handleProfileClick = () => {
+    navigate("/profile");
+    handleUserMenuClose();
+  };
+
   const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" , direction:'rtl' }}>
+    <Box
+      onClick={handleDrawerToggle}
+      sx={{ textAlign: "center", direction: "rtl" }}
+    >
       <Typography
         variant="h6"
         sx={{
@@ -67,7 +107,6 @@ function Navbar() {
           fontFamily: "Roboto",
           fontSize: "1.6rem",
           fontWeight: "bold",
-          
         }}
       >
         {names.ar.logoName}
@@ -101,10 +140,12 @@ function Navbar() {
             sx={{
               backgroundColor: item.selected ? "primary.main" : "transparent",
               color: item.selected ? "white" : "text.primary",
-              // direction: "rtl",
+              textAlign: "right",
+              
+
             }}
           >
-            <ListItemText primary={item.title}  />
+            <ListItemText primary={item.title} />
           </ListItem>
         ))}
       </List>
@@ -113,13 +154,12 @@ function Navbar() {
 
   return (
     <>
-      
-      <AppBar position="fixed" color="primary" elevation={6} sx={{direction:'rtl' ,
-        //  borderBottom:'5px solid gray', 
-        //  borderTop:'10px solid gray'
-         } }>
-        {/* <Toolbar sx={{ justifyContent: "space-between" , bgcolor:'secondary.main'}}/> */}
-        {/* <Box sx={{ py: 3, bgcolor: "secondary.main" }}></Box> */}
+      <AppBar
+        position="fixed"
+        color="primary"
+        elevation={6}
+        sx={{ direction: "rtl" }}
+      >
         <Toolbar
           sx={{
             justifyContent: "space-between",
@@ -159,14 +199,13 @@ function Navbar() {
               {names.ar.logoName}
             </Typography>
           </Box>
-          <Box sx={{direction:'rtl',  display: { xs: "none", md: "block" }  }}>
+          <Box sx={{ direction: "rtl", display: { xs: "none", md: "block" } }}>
             {navItems.map((item) => (
               <Button
                 key={item.title}
                 component={RouterLink}
                 to={item.path}
                 sx={{
-                  
                   color: "white",
                   fontSize: "1.4rem",
                   fontWeight: "bold",
@@ -178,44 +217,88 @@ function Navbar() {
                   },
 
                   borderBottom: item.selected ? "solid 4px white" : "none",
-                  // add shadow when selected 
+                  // add shadow when selected
                   // boxShadow: item.selected ? '0px 2px 10px rgba(0, 0, 0, 0.2)' : 'none',
                   //  on hover add shadow
-                  '&:hover': {
-                    boxShadow: '0px 2px 10px rgba(0, 0, 0, 0.2)',
-                    borderBottom:  "solid 4px white" ,
+                  "&:hover": {
+                    boxShadow: "0px 2px 10px rgba(0, 0, 0, 0.2)",
+                    borderBottom: "solid 4px white",
                     // add transaction
-                  transition: 'box-shadow 0.2s ease, border-bottom 0.2s ease'
-       
-                  }
-
-                
+                    transition: "box-shadow 0.2s ease, border-bottom 0.2s ease",
+                  },
                 }}
               >
                 {item.title}
               </Button>
             ))}
           </Box>
+
           <Box sx={{ display: "flex", gap: 1 }}>
-            <Button
+            {/* display avatar */}
+            {isLoggedIn ? (
+              <>
+                <IconButton
+                  color="inherit"
+                  onClick={handleUserMenuOpen}
+                  sx={{
+                    color: "white",
+                    fontSize: "1.5rem",
+                  }}
+                >
+                  <AccountCircleIcon sx={{ fontSize: "2rem" }} />
+                </IconButton>
+                <Menu
+                  anchorEl={anchorEl}
+                  open={Boolean(anchorEl)}
+                  onClose={handleUserMenuClose}
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "right",
+                  }}
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                >
+                  <MenuItem onClick={handleProfileClick}>
+                    <AccountCircleIcon sx={{ mr: 1 }} />
+                    {" الملف الشخصي"}
+                  </MenuItem>
+                  <MenuItem onClick={handleLogout}>
+                    <LogoutIcon sx={{ mr: 1 }} /> {names.ar.logout}
+                  </MenuItem>
+                </Menu>
+              </>
+            ) : (
+              <Button
+                color="inherit"
+                component={RouterLink}
+                to="/login"
+                sx={{
+                  color: "white",
+                  fontWeight: "bold",
+                  fontSize: "1rem",
+                  bgcolor: "secondary.main",
+                }}
+              >
+                {names.ar.login}
+              </Button>
+            )}
+
+            {/* <Button
               color="inherit"
               component={RouterLink}
               to="/login"
-              sx={{ 
-                color: "white" ,
+              sx={{
+                color: "white",
                 fontWeight: "bold",
                 fontSize: "1rem",
-                 bgcolor: "secondary.main"
-
-                // bgcolor: "linear-gradient(to right, #182847, #47689b)",
-                // gradient background color
-                  // background: 'linear-gradient(to right,   #009DDC,#182847)',
-
-                 }}
-            >
-              {/* Login */}
-              {names.ar.login}
-            </Button>
+                bgcolor: "secondary.main",
+              }}
+            > */}
+            {/* Login */}
+            {/* {names.ar.login} */}
+            {/* </Button> */}
             {/* <Button
               color="inherit"
               component={RouterLink}
@@ -223,8 +306,8 @@ function Navbar() {
               sx={{ color: "white", bgcolor: "secondary.main" }}
             >
               {/* Sign Up */}
-              {/* {names.ar.signup} */}
-            {/* </Button> */} 
+            {/* {names.ar.signup} */}
+            {/* </Button> */}
           </Box>
         </Toolbar>
       </AppBar>
@@ -237,7 +320,7 @@ function Navbar() {
         }}
         sx={{
           display: { xs: "block", sm: "none" },
-          
+
           "& .MuiDrawer-paper": { boxSizing: "border-box", width: 240 },
         }}
       >

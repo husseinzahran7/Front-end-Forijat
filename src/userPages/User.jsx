@@ -16,11 +16,12 @@ import DonationPage from './Donate'
 import ForgotPassword from './ForgotPassword'
 import Checkout from './Checkout'
 import ComingSoonPage from './subscription'
+import Profile from './Profile'
 
 
 
 const User = () => {
-    // const user = JSON.parse(localStorage.getItem('user'))
+    const user = JSON.parse(localStorage.getItem('user'))
     return (
         <>
             <Layout>
@@ -36,6 +37,7 @@ const User = () => {
                 <Route path="/ForgotPassword" element={<ForgotPassword/>} />
                 <Route path="/Checkout" element={<Checkout/>} />
                 <Route path="/subscription" element={<ComingSoonPage/>} />
+                <Route path="/Profile" element={<Profile/>} />
                 
                 
             {/* <Route path="/cases" element={<Cases />} /> */}

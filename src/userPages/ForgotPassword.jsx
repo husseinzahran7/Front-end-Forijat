@@ -5,6 +5,7 @@ import {
   TextField,
   Button,
   Alert,
+  Paper,
 } from '@mui/material';
 
 function ForgotPassword() {
@@ -36,6 +37,7 @@ function ForgotPassword() {
 
   return (
     <Container maxWidth="sm" sx={{ mt: 12 }}>
+      <Paper elevation={3} sx={{ p: 4, borderRadius: 3, }}>
       <Typography variant="h4" component="h1" gutterBottom dir='rtl'>
         {/* {"Forgot Password"} */}
         {"هل نسيت كلمة المرور؟"}
@@ -68,6 +70,7 @@ function ForgotPassword() {
           {"تم إرسال رابط إعادة تعيين كلمة المرور. يرجى التحقق من بريدك الإلكتروني."}
           </Alert>}
       </form>
+      </Paper>
     </Container>
   );
 }

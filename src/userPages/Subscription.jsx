@@ -43,11 +43,15 @@ import { useState } from 'react';
         </Typography>
         <Box component="form" onSubmit={handleSubmit}>
           <TextField
-            label="Your Email"
+            // label="Your Email"
+            label="البريد الإلكتروني"
+            type="email"
+            margin="normal"
             variant="outlined"
             fullWidth
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            sx={{bgcolor:'white' }}
           />
           <Button type="submit" variant="contained" color="primary" fullWidth sx={{ mt: 2 ,fontWeight: 'bold',fontSize: '16px', }}>
             {/* {"Sign Up for Updates"} */}

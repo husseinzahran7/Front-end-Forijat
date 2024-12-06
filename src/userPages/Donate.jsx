@@ -44,6 +44,11 @@ const DonationPage = () => {
           </Typography>
         </Box>
       </Box>
+
+      {/* MR  */}
+      {/* display the card here */}
+      {/* MR */}
+
       <Card>
         {/* <Divider /> */}
         <CardContent
@@ -111,20 +116,28 @@ const DonationPage = () => {
             </Grid>
           </Grid>
         </CardContent>
-
+<Divider />
+        {/* total visited number */}
+        
         <Box sx={{ p: 2 }}>
+          <Typography variant="body2">
+                
+          </Typography>
+        </Box>
+
+        {/* <Box sx={{ p: 2 }}>
           <Typography variant="body2">
             {"عدد الحالات: 2,096 | عدد عمليات التبرع: 5,084 زيارة"}
           </Typography>
-          <Typography variant="body2">{"وقت التسليم: 10 أيام"}</Typography>
-          <Box sx={{ mt: 2 }}>
+          {/* <Typography variant="body2">{"وقت التسليم: 10 أيام"}</Typography> */}
+        {/* <Box sx={{ mt: 2 }}>
             <LinearProgress variant="determinate" value={76} />
             <Typography variant="body2" sx={{ mt: 1 }}>
-              {"76% من إجمالي المبلغ المستهدف"}
-            </Typography>
-          </Box>
-        </Box>
-        <Divider />
+              {"76% من إجمالي المبلغ المستهدف"} */}
+        {/* </Typography> */}
+        {/* </Box>
+        </Box> */}
+        {/* <Divider />
         <Box sx={{ p: 2 }}>
           <Typography variant="body2">
             {"عليك بالتبرع وحكم بالسجن عمره 50 عاما متصل لمدة 3 أطفال منتق"}
@@ -138,8 +151,8 @@ const DonationPage = () => {
           </Typography>
           <Typography variant="body2">
             {" الرقم التعريفي: 199948820"}
-          </Typography>
-        </Box>
+          </Typography> */}
+        {/* </Box> */}
       </Card>
     </Box>
   );
