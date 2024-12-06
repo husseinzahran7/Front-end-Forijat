@@ -265,3 +265,141 @@ function Checkout() {
 }
 
 export default Checkout;
+
+
+// import React, { useState } from 'react';
+// import { 
+//   PayPalScriptProvider, 
+//   PayPalButtons 
+// } from "@paypal/react-paypal-js";
+// import {
+//   Container,
+//   Typography,
+//   Box,
+//   Grid,
+//   TextField,
+//   Paper,
+//   Dialog,
+//   DialogTitle,
+//   DialogContent,
+//   DialogContentText,
+//   DialogActions,
+//   Button
+// } from '@mui/material';
+
+// function PayPalCheckout() {
+//   const [donationAmount, setDonationAmount] = useState('');
+//   const [openSuccessDialog, setOpenSuccessDialog] = useState(false);
+//   const [paymentDetails, setPaymentDetails] = useState(null);
+
+//   // PayPal Sandbox Configuration
+//   const initialOptions = {
+//     clientId: "YOUR_PAYPAL_SANDBOX_CLIENT_ID", // Replace with your actual Sandbox Client ID
+//     currency: "USD",
+//     intent: "capture",
+//   };
+
+//   const createOrder = (data, actions) => {
+//     return actions.order.create({
+//       purchase_units: [
+//         {
+//           amount: {
+//             value: donationAmount
+//           },
+//           description: "Donation to Amal Organization"
+//         }
+//       ]
+//     });
+//   };
+
+//   const onApprove = (data, actions) => {
+//     return actions.order.capture().then((details) => {
+//       // Save payment details and show success dialog
+//       setPaymentDetails(details);
+//       setOpenSuccessDialog(true);
+//     });
+//   };
+
+//   const handleCloseSuccessDialog = () => {
+//     setOpenSuccessDialog(false);
+//     // Reset donation amount
+//     setDonationAmount('');
+//   };
+
+//   return (
+//     <Container maxWidth="md" sx={{ my: 6, direction: 'rtl' }}>
+//       <Paper elevation={3} sx={{ p: 4, borderRadius: 3 }}>
+//         <Typography variant="h5" gutterBottom align="center">
+//           {"التبرع عبر PayPal"}
+//         </Typography>
+
+//         <Grid container spacing={3}>
+//           <Grid item xs={12}>
+//             <TextField
+//               fullWidth
+//               label="مبلغ التبرع"
+//               type="number"
+//               variant="outlined"
+//               value={donationAmount}
+//               onChange={(e) => setDonationAmount(e.target.value)}
+//               placeholder="أدخل مبلغ التبرع"
+//               InputProps={{
+//                 endAdornment: <Typography variant="body2">دولار أمريكي</Typography>
+//               }}
+//             />
+//           </Grid>
+
+//           <Grid item xs={12}>
+//             <PayPalScriptProvider options={initialOptions}>
+//               <PayPalButtons
+//                 disabled={!donationAmount}
+//                 style={{ 
+//                   layout: "vertical",
+//                   color:  "blue",
+//                   shape:  "rect",
+//                   label:  "paypal"
+//                 }}
+//                 createOrder={createOrder}
+//                 onApprove={onApprove}
+//                 onError={(err) => {
+//                   console.error("PayPal Checkout Error", err);
+//                   alert("حدث خطأ أثناء عملية الدفع");
+//                 }}
+//               />
+//             </PayPalScriptProvider>
+//           </Grid>
+//         </Grid>
+
+//         {/* Success Dialog */}
+//         <Dialog
+//           open={openSuccessDialog}
+//           onClose={handleCloseSuccessDialog}
+//         >
+//           <DialogTitle>{"تم التبرع بنجاح"}</DialogTitle>
+//           <DialogContent>
+//             <DialogContentText>
+//               شكراً لتبرعك! 
+//               {paymentDetails && (
+//                 <>
+//                   <Typography>
+//                     رقم الطلب: {paymentDetails.id}
+//                   </Typography>
+//                   <Typography>
+//                     المبلغ: {paymentDetails.purchase_units[0].amount.value} دولار
+//                   </Typography>
+//                 </>
+//               )}
+//             </DialogContentText>
+//           </DialogContent>
+//           <DialogActions>
+//             <Button onClick={handleCloseSuccessDialog} color="primary">
+//               إغلاق
+//             </Button>
+//           </DialogActions>
+//         </Dialog>
+//       </Paper>
+//     </Container>
+//   );
+// }
+
+// export default PayPalCheckout;

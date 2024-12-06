@@ -15,6 +15,7 @@ import TermsOfService from './TermsOfService'
 import DonationPage from './Donate'
 import ForgotPassword from './ForgotPassword'
 import Checkout from './Checkout'
+import ComingSoonPage from './subscription'
 
 
 
@@ -34,6 +35,7 @@ const User = () => {
                 <Route path="/Donate/*" element={<DonationPage/>} />
                 <Route path="/ForgotPassword" element={<ForgotPassword/>} />
                 <Route path="/Checkout" element={<Checkout/>} />
+                <Route path="/subscription" element={<ComingSoonPage/>} />
                 
                 
             {/* <Route path="/cases" element={<Cases />} /> */}

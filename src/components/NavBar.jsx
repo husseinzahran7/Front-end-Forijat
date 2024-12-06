@@ -27,8 +27,8 @@ import { Gradient } from "@mui/icons-material";
 const navItems = [
   { title: "الرئيسية ", path: "/", selected: false }, // Home in Arabic
   { title: "الحالات ", path: "/cases", selected: false }, // Cases in Arabic
-  { title: "التبرع ", path: "/donate", selected: false }, // Donate in Arabic
-  { title: "لوحة التحكم", path: "/dashboard", selected: false }, // Dashboard in Arabic
+  { title: "التبرع ", path: "/subscription", selected: false }, // Donate in Arabic
+ // { title: "لوحة التحكم", path: "/dashboard", selected: false }, // Dashboard in Arabic
  
 
 ];

@@ -19,7 +19,7 @@ function Header() {
           <Button color="inherit" component={RouterLink} to="/cases" sx={{ color: 'white' }}>
             Cases
           </Button>
-          <Button color="inherit" component={RouterLink} to="/donate" sx={{ color: 'white' }}>
+          <Button color="inherit" component={RouterLink} to="/subscription" sx={{ color: 'white' }}>
             Donate
           </Button>
           <Button color="inherit" component={RouterLink} to="/dashboard" sx={{ color: 'white' }}>

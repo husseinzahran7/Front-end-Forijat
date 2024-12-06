@@ -13,7 +13,7 @@ function MyReCaptcha() {
   
     return (
       <ReCAPTCHA
-        sitekey="YOUR_SITE_KEY"
+        sitekey="6LeW-Y8qAAAAAKxIgGGGOM1YD0ja6pTh0myHWNVn"
         onChange={handleCaptchaChange}
       />
     );
