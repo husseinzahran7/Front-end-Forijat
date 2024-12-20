@@ -1,8 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
 * {
   /* padding: 0; */
   /* margin: 0; */
   /* box-sizing: border-box; */
   /* outline: 1px solid red; */
+  
+  /* add cairo font family */
+  font-family: 'Cairo' !important;
+  
+
 
 }
 ::-webkit-scrollbar {

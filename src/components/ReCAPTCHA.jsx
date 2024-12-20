@@ -1,3 +1,4 @@
+import { Container } from '@mui/material';
 import React, { useState } from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
 
@@ -12,10 +13,12 @@ function MyReCaptcha() {
     };
   
     return (
+      <Container>
       <ReCAPTCHA
         sitekey="6LeW-Y8qAAAAAKxIgGGGOM1YD0ja6pTh0myHWNVn"
         onChange={handleCaptchaChange}
       />
+      </Container>
     );
   }
   

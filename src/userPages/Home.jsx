@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect,useState } from 'react';
+import axios from "axios";
 import {
   Container,
   Typography,
@@ -22,7 +23,7 @@ import SlideShow from '../components/SlideShow';
 import CardC from '../components/Card';
 import { X } from '@mui/icons-material';
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-
+import API_ENDPOINTS from "../../apiConfig";
 // import { Image } from '@mui/icons-material';
 // import {CardC} from '../components/Card';
 
@@ -81,6 +82,33 @@ const lang = {
 function Home() {
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
   const [selectedCase, setSelectedCase] = useState(null);
+  const [caseDate, setCaseDate] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [invoiceNumber, setInvoiceNumber] = useState("");
+
+  useEffect(() => {
+    // Define an async function for the API request
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const response = await axios.get(API_ENDPOINTS.getAllCases);
+        setCaseDate(response.data.results); // Update state with response data
+        console.log(caseDate);
+        
+      } catch (err) {
+        setError(err.message); // Handle error
+        console.log(err.message);
+        console.log("err.message");
+        
+      }
+      finally{
+        setLoading(false);
+      }
+    };
+
+    fetchData(); // Call the fetch function
+  }, []);
 
   const handlePageChange = (event, newPage) => {
     setCurrentPage(newPage);
@@ -191,7 +219,7 @@ function Home() {
 
 
           <Grid container spacing={4} >
-            {featuredCases.map((case_) => {
+            {caseDate.slice(0, 3).map((case_) => {
               return (
                 <Grid
                   item
@@ -204,13 +232,14 @@ function Home() {
                   justifyContent="center"
                 >
                   <CardC
-                    id={case_.id}
-                    Story={case_.story}
-                    totalAmount={case_.amount}
-                    raisedAmount={case_.raised}
-                    InvioceNumber={case_.invoiceNumber}
-                    handleShareClick={handleShareClick}
-                    case_={case_}
+                     id={case_.id}
+                     Story={case_.description}
+                     totalAmount={case_.total_amount}
+                     raisedAmount={case_.paid_amount}
+                     remainingAmount = {case_.remaining_amount}
+                     InvioceNumber={case_.invoice_number}
+                     handleShareClick={handleShareClick}
+                     case_={case_}
 
                   />
                 </Grid>

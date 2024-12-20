@@ -28,10 +28,12 @@ function CardC({
   totalAmount,
   raisedAmount,
   handleShareClick,
+  remainingAmount,
   case_,
 }) {
   const theme = useTheme();
   const progress = Math.round((raisedAmount / totalAmount) * 100);
+
   return (
     <>
       <Box
@@ -160,14 +162,14 @@ function CardC({
               sx={{ color: "text.secondary" }}
             >
               {/* {"Raised Amount"} */}
-              {"المبلغ الذي تم جمعه"}
+              {"المبلغ المتبقي"}
             </Typography>
             <Typography
               variant="caption"
               component="div"
               sx={{ color: "text.secondary" }}
             >
-              {raisedAmount}
+              {remainingAmount}
             </Typography>
           </Box>
           <Box

@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import {
   Container,
   Typography,
@@ -34,7 +35,9 @@ import CardC from "../components/Card";
 import InfoIcon from "@mui/icons-material/Info";
 import TuneIcon from "@mui/icons-material/Tune";
 import GavelIcon from "@mui/icons-material/Gavel";
-import CloseIcon from '@mui/icons-material/Close';
+import CloseIcon from "@mui/icons-material/Close";
+import CircularProgress from "@mui/material/CircularProgress";
+import API_ENDPOINTS from "../../apiConfig";
 
 // This is a mock data array. In a real application, you would fetch this data from your API.
 const mockCases = [
@@ -206,7 +209,14 @@ const lang = {
   Name: "",
   Btn: "تبرع",
 };
-
+const initialFilterValues = {
+  jail_location: "",
+  nationality: "",
+  gender: "",
+  social_status: "",
+  donation_type: "",
+  caseCount: "",
+};
 
 function Cases() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -215,6 +225,30 @@ function Cases() {
   const theme = useTheme();
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
   const [selectedCase, setSelectedCase] = useState(null);
+  const [caseDate, setCaseDate] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [filterValues, setFilterValues] = useState(initialFilterValues);
+  const [invoiceNumber, setInvoiceNumber] = useState("");
+
+  useEffect(() => {
+    // Define an async function for the API request
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(API_ENDPOINTS.getAllCases);
+        setCaseDate(response.data.results); // Update state with response data
+        console.log(caseDate);
+        setLoading(false);
+      } catch (err) {
+        setError(err.message); // Handle error
+        console.log(err.message);
+        console.log("err.message");
+        setLoading(false);
+      }
+    };
+
+    fetchData(); // Call the fetch function
+  }, []);
 
   const handlePageChange = (event, newPage) => {
     setCurrentPage(newPage);
@@ -241,11 +275,47 @@ function Cases() {
     setOpen(false);
   };
 
-
-  // for filter 
-
-
-
+  // for filter
+  const handleFilterChange = (key, value) => {
+    setFilterValues((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
+  };
+  // Fetch data based on filters
+  const fetchFilteredData = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get(API_ENDPOINTS.getAllCases, {
+        params: filterValues,
+      });
+      setCaseDate(response.data.results);
+      console.log(response.data.results);
+    } catch (err) {
+      setError(err.message);
+      console.log(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+  const fetchDataWithInvoice = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get(
+        `${API_ENDPOINTS.getCaseById}${invoiceNumber}`
+      );
+      setCaseDate([response.data]);
+      console.log(response.data);
+    } catch (err) {
+      setError(err.message);
+      console.log(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+  const resetFilters = () => {
+    setFilterValues(initialFilterValues);
+  };
 
   // used for ShareLink
   const pathLink = window.location.href;
@@ -267,12 +337,87 @@ function Cases() {
   const currentCases = mockCases.slice(indexOfFirstCase, indexOfLastCase);
 
   const filters = [
-    { key: "prisonArea", label: "منطقة السجن", options: ["الكل", "الرياض", "جدة", "مكة", "الدمام"] },
-    { key: "nationality", label: "الجنسية", options:  ["الكل", "سعودي", "مصري", "سوري", "لبناني", "فلسطيني", "أردني", "عراقي", "جزائري", "تونسي", "مغربي"] },
-    { key: "gender", label: "الجنس", options: ["الكل","ذكر", "أنثى",] },
-    { key: "maritalStatus", label: "الحالة الإجتماعية", options: ["الكل","أعزب","متزوج","عزباء","متزوجة","غير متزوجة","مطلقة"] },
-    { key: "donationType", label: "نوع التبرع", options: ["الكل","صدقة","زكاة",] },
-    { key: "caseCount", label: "عدد القضايا", options: ["الكل","1","2","3","4","5","5 أو أكثر"] },
+    {
+      key: "jail_location",
+      label: "منطقة السجن",
+      options: [
+        { display: "الكل", value: "" },
+        { display: "عمان", value: "amman" },
+        { display: "الزرقاء", value: "zarqa" },
+        { display: "إربد", value: "irbid" },
+        { display: "العقبة", value: "aqaba" },
+        { display: "مأدبا", value: "madaba" },
+        { display: "المفرق", value: "mafraq" },
+        { display: "السلط", value: "salt" },
+        { display: "الكرك", value: "karak" },
+        { display: "عجلون", value: "ajloun" },
+        { display: "جرش", value: "jerash" },
+        { display: "معان", value: "maan" },
+        { display: "الطفيلة", value: "tafilah" },
+      ],
+    },
+    {
+      key: "nationality",
+      label: "الجنسية",
+      options: [
+        { display: "الكل", value: "" },
+        { display: "كويتي", value: "KW" },
+        { display: "سعودي", value: "SA" },
+        { display: "بحريني", value: "BH" },
+        { display: "قطري", value: "QA" },
+        { display: "إماراتي", value: "AE" },
+        { display: "عماني", value: "OM" },
+        { display: "أردني", value: "JO" },
+        { display: "مصري", value: "EG" },
+        { display: "هندي", value: "IN" },
+        { display: "باكستاني", value: "PK" },
+        { display: "بنغلادشي", value: "BD" },
+        { display: "فلبيني", value: "PH" },
+        { display: "أخرى", value: "OT" },
+      ],
+    },
+    {
+      key: "gender",
+      label: "الجنس",
+      options: [
+        { display: "الكل", value: "" },
+        { display: "ذكر", value: "M" },
+        { display: "أنثى", value: "F" },
+      ],
+    },
+    {
+      key: "social_status",
+      label: "الحالة الإجتماعية",
+      options: [
+        { display: "الكل", value: "" },
+        { display: "أعزب", value: "single" },
+        { display: "متزوج", value: "married" },
+        { display: "مطلق", value: "divorced" },
+        { display: "أرمل", value: "widowed" },
+      ],
+    },
+    {
+      key: "donation_type",
+      label: "نوع التبرع",
+      options: [
+        { display: "الكل", value: "" },
+        { display: "زكاة", value: "zakat" },
+        { display: "صدقة", value: "sadaqah" },
+      ],
+    },
+    {
+      key: "caseCount",
+      label: "عدد القضايا",
+      options: [
+        { display: "الكل", value: "" },
+        { display: "1", value: "1" },
+        { display: "2", value: "2" },
+        { display: "3", value: "3" },
+        { display: "4", value: "4" },
+        { display: "5", value: "5" },
+        { display: "5 أو أكثر", value: "5 أو أكثر" },
+      ],
+    },
   ];
 
   return (
@@ -426,12 +571,123 @@ function Cases() {
         </Box>
         {/* bottom */}
 
+        {filter ? (
+          <>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row-reverse",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  py: 1,
+                  px: 2,
+                }}
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    px: 1,
+                  }}
+                >
+                  <div dir="rtl">
+                    <Box>
+                      <Typography
+                        sx={{
+                          fontSize: { xs: "1rem", sm: "1.2rem", md: "1.5rem" },
+                          fontWeight: 800,
+                          minWidth: "60px",
+                          textAlign: "center",
+                        }}
+                      >
+                        {"التصفية"}
+                      </Typography>
+                    </Box>
+                  </div>
+                </Box>
 
-        {filter ? (<>
-          <Box sx={{
-            display: "flex",
-            flexDirection: "column"
-          }}>
+                <Button
+                  startIcon={<CloseIcon />}
+                  variant="contained"
+                  sx={{ borderRadius: "50px" }}
+                  onClick={() => setFilter(false)}
+                >
+                  {"إغلاق"}
+                </Button>
+              </Box>
+
+              <Grid container spacing={4} sx={{ px: 2, py: 1 }}>
+                {/* Prison Area Select */}
+                {filters.map((filter, index) => (
+                  <Grid
+                    key={index} // Use index or a unique key based on the filter
+                    item
+                    xs={12}
+                    sm={6}
+                    md={6}
+                    lg={4}
+                    container
+                    justifyContent="center"
+                  >
+                    <FormControl fullWidth>
+                      <InputLabel id={`${filter.key}-label`}>
+                        {filter.label}
+                      </InputLabel>
+                      <Select
+                        labelId={`${filter.key}-label`}
+                        id={`${filter.key}-select`}
+                        label={filter.label}
+                        sx={{ direction: "rtl" }}
+                        value={filterValues[filter.key]}
+                        onChange={(e) =>
+                          handleFilterChange(filter.key, e.target.value)
+                        }
+                        MenuProps={{
+                          PaperProps: {
+                            style: {
+                              maxHeight: 200, // Set the height for the dropdown
+                              overflowY: "auto", // Enable vertical scrolling
+                            },
+                          },
+                        }}
+                      >
+                        {filter.options.map((option, optionIndex) => (
+                          <MenuItem key={optionIndex} value={option.value}>
+                            {option.display}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                ))}
+              </Grid>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row-reverse",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  px: 2,
+                  py: 1,
+                }}
+              >
+                <Button variant="contained" onClick={fetchFilteredData} disabled={loading}>
+                  تصفية
+                </Button>
+                <Button variant="outlined" onClick={resetFilters}>
+                  مسح الكل
+                </Button>
+              </Box>
+            </Box>
+          </>
+        ) : (
+          <>
             <Box
               sx={{
                 display: "flex",
@@ -442,171 +698,95 @@ function Cases() {
                 px: 2,
               }}
             >
-
               <Box
                 sx={{
                   display: "flex",
                   alignItems: "center",
+                  border: "1px solid Gray",
+                  borderRadius: "5px",
                   px: 1,
                 }}
               >
-
+                <Button
+                  variant="contained"
+                  sx={{ borderRadius: "50px" }}
+                  onClick={fetchDataWithInvoice}
+                  disabled={loading}
+                >
+                  {"بحث"}
+                </Button>
                 <div dir="rtl">
-                  <Box>
-                    <Typography
-                      sx={{
-                        fontSize: { xs: "1rem", sm: "1.2rem", md: "1.5rem" },
-                        fontWeight: 800,
-                        minWidth: "60px",
-                        textAlign: "center",
-                      }}
-                    >
-                      {"التصفية"}
-                    </Typography>
-                  </Box>
+                  <TextField
+                    id="outlined-basic"
+                    sx={{
+                      "& .MuiOutlinedInput-root": {
+                        "& fieldset": {
+                          border: "none", // Remove border
+                        },
+                      },
+                    }}
+                    type="number"
+                    placeholder="رقم الفاتورة"
+                    value={invoiceNumber}
+                    onChange={(e) => setInvoiceNumber(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        fetchDataWithInvoice(invoiceNumber);
+                      }
+                    }}
+                  />
                 </div>
               </Box>
 
               <Button
-                startIcon={<CloseIcon />}
+                startIcon={<TuneIcon />}
                 variant="contained"
                 sx={{ borderRadius: "50px" }}
-                onClick={() => setFilter(false)}
+                onClick={() => setFilter(true)}
               >
-                {"إغلاق"}
+                {"تصفية"}
               </Button>
             </Box>
-
-            <Grid container spacing={4} sx={{ px: 2, py: 1 }}>
-              {/* Prison Area Select */}
-              {filters.map((filter, index) => (
-                <Grid
-                  key={index} // Use index or a unique key based on the filter
-                  item
-                  xs={12}
-                  sm={6}
-                  md={6}
-                  lg={4}
-                  container
-                  justifyContent="center"
-                >
-                  <FormControl fullWidth>
-                    <InputLabel id={`${filter.key}-label`}>{filter.label}</InputLabel>
-                    <Select
-                      labelId={`${filter.key}-label`}
-                      id={`${filter.key}-select`}
-                      label={filter.label}
-                      sx={{ direction: "rtl" }} 
-                      MenuProps={{
-                        PaperProps: {
-                          style: {
-                            maxHeight: 200,  // Set the height for the dropdown
-                            overflowY: 'auto',  // Enable vertical scrolling
-                          },
-                        },
-                      }}
-                    >
-                      {filter.options.map((option, optionIndex) => (
-                        <MenuItem key={optionIndex} value={option}>
-                          {option}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                </Grid>
-              ))}
-              
-            </Grid>
-            <Box 
-            sx={{
-              display:"flex",
-              flexDirection:"row-reverse",
-              alignItems:"center",
-              justifyContent:"space-between",
-              px:2,
-              py:1
-            }}
-            >
-              <Button variant="contained">تصفية</Button>
-              <Button variant="outlined">مسح الكل</Button>
-            </Box>
-          </Box>
-        </>) : (<>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row-reverse",
-              alignItems: "center",
-              justifyContent: "space-between",
-              py: 1,
-              px: 2,
-            }}
-          >
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                border: "1px solid Gray",
-                borderRadius: "5px",
-                px: 1,
-              }}
-            >
-              <Button variant="contained" sx={{ borderRadius: "50px" }}>
-                {"بحث"}
-              </Button>
-              <div dir="rtl">
-                <TextField
-                  id="outlined-basic"
-                  sx={{
-                    "& .MuiOutlinedInput-root": {
-                      "& fieldset": {
-                        border: "none", // Remove border
-                      },
-                    },
-                  }}
-                  type="number"
-                  placeholder="رقم الفاتورة "
-                />
-              </div>
-            </Box>
-
-            <Button
-              startIcon={<TuneIcon />}
-              variant="contained"
-              sx={{ borderRadius: "50px" }}
-              onClick={() => setFilter(true)}
-            >
-              {"تصفية"}
-            </Button>
-          </Box>
-        </>)}
-
+          </>
+        )}
       </Box>
 
       <Grid container spacing={4}>
         {/* <CardC/> */}
-        {currentCases.map((case_) => (
+        {loading && (
           <Grid
-            item
-            key={case_.id}
             xs={12}
-            sm={6}
-            md={6}
-            lg={4}
+            item
             container
             justifyContent="center"
+            alignItems="center"
           >
-            <CardC
-              id={case_.id}
-              Story={case_.story}
-              totalAmount={case_.amount}
-              raisedAmount={case_.raised}
-              InvioceNumber={case_.invoiceNumber}
-              handleShareClick={handleShareClick}
-              case_={case_}
-            />
+            <CircularProgress />
           </Grid>
-        ))}
+        )}
+        {!loading &&
+          caseDate.map((case_) => (
+            <Grid
+              item
+              key={case_.id}
+              xs={12}
+              sm={6}
+              md={6}
+              lg={4}
+              container
+            >
+              <CardC
+                id={case_.id}
+                Story={case_.description}
+                totalAmount={case_.total_amount}
+                raisedAmount={case_.paid_amount}
+                remainingAmount = {case_.remaining_amount}
+                InvioceNumber={case_.invoice_number}
+                handleShareClick={handleShareClick}
+                case_={case_}
+              />
+            </Grid>
+          ))}
       </Grid>
 
       {/* Share Dialog */}
@@ -637,7 +817,9 @@ function Cases() {
             type="text"
             fullWidth
             variant="outlined"
-            value={selectedCase ? `${pathLink}/${selectedCase.invoiceNumber}` : ""}
+            value={
+              selectedCase ? `${pathLink}/${selectedCase.invoiceNumber}` : ""
+            }
             InputProps={{
               endAdornment: (
                 <IconButton onClick={copyShareLink}>
