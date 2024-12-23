@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Button,
@@ -8,6 +8,11 @@ import {
   CardHeader,
   CircularProgress,
   Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   Divider,
   Grid,
   IconButton,
@@ -15,16 +20,62 @@ import {
   MenuItem,
   TextField,
   Typography,
+
 } from "@mui/material";
 import ShareIcon from "@mui/icons-material/Share";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+
 const info = [{ text: " الزيارات 551 زيارة", image: "../src/images/icon-eye.svg" },
 { text: " آخر عملية تبرع قبل 2 دقيقة", image: "../src/images/icon-hand.svg" },
 { text: " عدد عمليات التبرع 200 عملية", image: "../src/images/icon-last-donation.svg" },
 ]
 const DonationPage = () => {
+  const [open, setOpen] = useState(false);
+  const [shareDialogOpen, setShareDialogOpen] = useState(false);
+  const [selectedCase, setSelectedCase] = useState(null);
+  const case_ = {
+    id: 1,
+    name: "John Doe",
+    amount: 5000,
+    raised: 2500,
+    invoiceNumber: "10001",
+    story: "John's inspiring journey to overcome challenges.",
+  };
+  const handleShareClick = (case_) => {
+    setSelectedCase(case_);
+    setShareDialogOpen(true);
+  };
+
+  const handleShareClose = () => {
+    setShareDialogOpen(false);
+  };
+
+  // for the pop up 
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const pathLink = window.location.href;
+
+  const copyShareLink = () => {
+    if (selectedCase) {
+      // Change this when deploy with your URL
+
+      // In a real app, this would be your actual case detail URL
+      // const shareLink = `https://Amal.com/cases/${selectedCase.id}`;
+      const shareLink = `${pathLink}/donate/${selectedCase.invoiceNumber}`;
+      navigator.clipboard.writeText(shareLink);
+      // Optionally, show a snackbar or toast to confirm copying
+    }
+  };
+
   return (
     <Container maxWidth="xl" sx={{ my: 2 }}>
-      <Box sx={{ p: 4, my: 4, direction: "rtl", }}>
+      <Box sx={{ p: { s: 1, md: 4 }, my: { xs: 3, md: 1 }, direction: "rtl" }}>
         <Box
           sx={{
             display: "flex",
@@ -58,78 +109,132 @@ const DonationPage = () => {
         {/* MR  */}
         {/* display the card here */}
         {/* MR */}
-        <Box sx={{ display: "flex", justifyContent: "space-between", }}>
-          <Box sx={{ display: "flex", width: "100%",maxHeight:"350px" }}>
+        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+          <Box sx={{ display: "flex", width: "100%", flexDirection: { xs: 'column', md: "row" }, alignItems: { s: "center", md: "flex-start" } }}>
             <Box
               sx={{
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "center",
                 alignItems: "center",
-                width: "600px",
+                //                width: "600px",
+                width: { s: '100%', md: "600px" },
                 border: "1px solid #ddd",
                 borderRadius: "20px",
                 boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
                 overflow: "hidden",
-                mx: 2
+                mx: 2,
               }}
             >
               {/* top part */}
               <Box
                 sx={{
                   display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  background: "linear-gradient(to left, #182847, #009DDC)",
-                  width: "600px",
-                  height: "200px",
+                  flexDirection: 'column',
+                  width: "100%",
+                  height: "66%",
+                  pb: 2,
                   borderRadius: "20px 20px 0 0",
-                  boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+                  borderBottom: `2px dashed gray`,
+                  borderImage: `repeating-linear-gradient(
+                                  to right,
+                                  gray 0,
+                                  gray 10px, /* Dash size */
+                                  transparent 10px, /* Gap starts */
+                                  transparent 20px /* Total gap size */
+                                )`,
+                  borderImageSlice: 1,
                 }}
               >
                 <Box
                   sx={{
                     display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
+                    justifyContent: "space-between",
                     alignItems: "center",
-                    minWidth: "300px",
+                    width: "100%",
+                    px: 3,
+                    py: 3,
+                    background: "linear-gradient(to left, #182847, #009DDC)",
+                    color: "white",
+                    boxSizing: "border-box",
+                  }}
+                >
+                  <Box>
+                    <Box>
+                      <Typography>
+                        {"أمل"}
+                      </Typography>
+                    </Box>
+                    <Box>
+                      <Typography>
+                        {"رقم الفاتورة: 1920404542"}
+                      </Typography>
+                    </Box>
+                  </Box>
+                  <Button
+                    sx={{ direction: "ltr", borderRadius: "30px" }}
+                    variant="contained"
+                    startIcon={<ShareIcon />}
+                    size="large"
+                    onClick={() => handleShareClick(case_)}
+                  >
+                    {"مشاركة"}
+                  </Button>
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    py: 1,
+                    px: 3,
+                    background: "white",
                   }}
                 >
                   <Box
                     sx={{
-                      width: "90%",
-                      height: "100px",
-                      bgcolor: "white",
-                      p: 2,
-                      borderRadius: "5px",
-                      alignContent: "center",
+                      bgcolor: "lightgray",
+                      width: "fit-content",
+                      p: 1,
+                      borderRadius: "4px",
+                      my: 1,
                     }}
                   >
-                    <Typography textAlign="center">{"Story"}</Typography>
-                  </Box>
-                  <Box
-                    sx={{
-                      width: "90%",
-                      height: "30px",
-                      bgcolor: "white",
-                      p: 2,
-                      borderRadius: "0 0 5px 5px",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      m: 0,
-                      background:
-                        "linear-gradient(to right, rgba(24, 40, 71, 0.3), rgba(0, 157, 220, 0.3))",
-                    }}
-                  >
-                    <Typography textAlign="center" color="white">
-                      {/* {"Invoice number: "}  */}
-                      {"رقم الفاتورة: "}
-                      {"122458"}
+                    <Typography>
+                      {"عليه حكم منذ : 5 سنوات و 7 أشهر"}
                     </Typography>
                   </Box>
+                  <Box>
+                    <Typography>
+                      {"عليه امر بالتنفيذ وحكم بالسجن عمره 45 عاما متزوج لديه طفل متبقى عليه مبلغ 39212 ريال"}
+                    </Typography>
+                  </Box>
+
                 </Box>
+              </Box>
+              <Box
+                sx={{
+                  width: "100%",
+                  m: 1,
+                  pl: 2,
+                  pr: 3,
+                  pt: 1,
+                  display: "flex",
+                  alignItems: "center", // Vertically align items
+                }}
+              >
+                <LinearProgress
+                  variant="determinate"
+                  value={90}
+                  sx={{
+                    height: 20,
+                    borderRadius: "4px",
+                    width: "90%", // Ensure it takes most of the space
+                    transform: "scaleX(-1)",
+                  }}
+                />
+                <Typography
+                sx={{mx:"auto"}}
+                >{"90%"}</Typography>
               </Box>
               {/* bottom part */}
               <Box
@@ -138,39 +243,33 @@ const DonationPage = () => {
                   justifyContent: "space-around",
                   alignItems: "center",
                   width: "100%",
-                  borderBottom: `2px dashed gray`,
-                  borderImage: `repeating-linear-gradient(
-            to right,
-            gray 0,
-            gray 10px, /* Dash size */
-            transparent 10px, /* Gap starts */
-            transparent 20px /* Total gap size */
-          )`,
-                  borderImageSlice: 1,
                 }}
               >
-                <Box sx={{ position: "relative", display: "inline-flex" }}>
-                  <CircularProgress variant="determinate" value={90} />
-                  <Box
-                    sx={{
-                      top: 0,
-                      left: 0,
-                      bottom: 0,
-                      right: 0,
-                      position: "absolute",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
+
+                <Box
+                  sx={{
+                    p: 3,
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Typography
+                    variant="caption"
+                    component="div"
+                    sx={{ color: "text.secondary" }}
                   >
-                    <Typography
-                      variant="caption"
-                      component="div"
-                      sx={{ color: "text.secondary" }}
-                    >
-                      {`${Math.round(90)}%`}
-                    </Typography>
-                  </Box>
+                    {/* {"Raised Amount"} */}
+                    {"الجنسية"}
+                  </Typography>
+                  <Typography
+                    variant="caption"
+                    component="div"
+                    sx={{ color: "text.secondary" }}
+                  >
+                    {"سعودي"}
+                  </Typography>
                 </Box>
                 <Box
                   sx={{
@@ -199,6 +298,7 @@ const DonationPage = () => {
                 </Box>
                 <Box
                   sx={{
+                    p: 3,
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "center",
@@ -210,19 +310,19 @@ const DonationPage = () => {
                     component="div"
                     sx={{ color: "text.secondary" }}
                   >
-                    {/* {"Collected"} */}
-                    {"تم جمعها"}
+                    {/* {"Raised Amount"} */}
+                    {"المنطقة"}
                   </Typography>
                   <Typography
                     variant="caption"
                     component="div"
                     sx={{ color: "text.secondary" }}
                   >
-                    {`${Math.round(90)}%`}
+                    {"الرياض"}
                   </Typography>
                 </Box>
               </Box>
-              <CardActions
+              {/* <CardActions
                 sx={{
                   width: "100%",
                   justifyContent: "space-between",
@@ -246,10 +346,15 @@ const DonationPage = () => {
                 >
                   {"تبرع الان"}
                 </Button>
-              </CardActions>
+              </CardActions> */}
+              {/* <Box 
+                sx={{ width: '100%', m: 2 ,px:3}}>
+                <LinearProgress variant="determinate" value={90} sx={{ height: 20 ,borderRadius:"4px",transform: 'scaleX(-1)',}}/>
+
+              </Box > */}
             </Box>
-            <Box sx={{ width: "50%" }}>
-              <Card sx={{ width: { xl: "100%" }, maxHeight: "200px" }}>
+            <Box sx={{ width: { s: '100%', md: "50%" } }}>
+              <Card sx={{ width: { xl: "100%" }, m: { xs: 2, md: 0 }, borderRadius: "20px" }}>
                 {/* <Divider /> */}
                 <CardContent
                 // sx={{borderRadius: "12px"}}
@@ -264,7 +369,7 @@ const DonationPage = () => {
                     {"مبلغ التبرع"}
                   </Typography>
                   <Grid container spacing={2}>
-                    <Grid item xs={12} sm={6} md={3}>
+                    <Grid item xs={4} lg={3} >
                       <Button
                         variant="outlined"
                         fullWidth
@@ -276,7 +381,7 @@ const DonationPage = () => {
                         {"10 د.أ"}
                       </Button>
                     </Grid>
-                    <Grid item xs={12} sm={6} md={3}>
+                    <Grid item xs={4} lg={3}>
                       <Button
                         variant="outlined"
                         fullWidth
@@ -288,7 +393,7 @@ const DonationPage = () => {
                         {"20 د.أ"}
                       </Button>
                     </Grid>
-                    <Grid item xs={12} sm={6} md={3}>
+                    <Grid item xs={4} lg={3}>
                       <Button
                         variant="outlined"
                         fullWidth
@@ -300,16 +405,16 @@ const DonationPage = () => {
                         {"50 د.أ"}
                       </Button>
                     </Grid>
-                    <Grid item xs={12} sm={6} md={3}>
+                    <Grid item xs={12} lg={3}>
                       <TextField
                         variant="outlined"
                         fullWidth
                         placeholder="مبلغ آخر"
                         InputProps={{
                           endAdornment: (
-                            <Button variant="contained" color="primary" sx={{ ml: 1 }}>
-                              {"تبرع"}
-                            </Button>
+                            <Box sx={{ ml: 1 }}>
+                              {"د.أ"}
+                            </Box>
                           ),
                         }}
                       />
@@ -321,7 +426,7 @@ const DonationPage = () => {
 
                 <Box sx={{ mx: 2, my: 1 }}>
 
-                  <Button variant="contained" color="primary" sx={{ width: "100%", }}>
+                  <Button variant="contained" color="primary" sx={{ width: "100%", borderRadius: "30px", }}>
                     {"تبرع"}
                   </Button>
 
@@ -331,9 +436,9 @@ const DonationPage = () => {
               </Card>
               <Grid container spacing={2} sx={{ px: 2, py: 1 }}>
                 {
-                  info.map((item) => (
+                  info.map((item, index) => (
                     <Grid
-
+                      key={index}
                       item
                       xs={12}
 
@@ -369,6 +474,52 @@ const DonationPage = () => {
           </Box>
         </Box>
       </Box>
+      <Dialog
+        open={shareDialogOpen}
+        onClose={handleShareClose}
+        aria-labelledby="share-dialog-title"
+        dir="rtl"
+        sx={{ '& .MuiDialog-paper': { width: '600px', maxWidth: '800px' } }}
+      >
+        <DialogTitle id="share-dialog-title">
+          {/* {"Share Case"} */}
+          {"مشاركة حالة"}
+        </DialogTitle>
+        <DialogContent
+        // dir='rtl'
+        >
+          <DialogContentText>
+            {/* {"Share this case with others"} */}
+            {"شارك الحالة مع الاخرين."}
+          </DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="share-link"
+            // label="Share Link"
+            label="رابط المشاركة"
+            dir="ltr"
+            type="text"
+            fullWidth
+            variant="outlined"
+            value={
+              selectedCase ? `${pathLink}/${selectedCase.invoiceNumber}` : ""
+            }
+            InputProps={{
+              endAdornment: (
+                <IconButton onClick={copyShareLink}>
+                  <ContentCopyIcon />
+                </IconButton>
+              ),
+            }}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleShareClose} color="primary">
+            {"اغلاق"}
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Container>
   );
 };
