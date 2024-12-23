@@ -17,6 +17,7 @@ import {
   Divider,
 } from '@mui/material';
 import Paypal from '../components/PayPal';
+import { useNavigate } from 'react-router-dom';
 
 function Checkout() {
   const [activeStep, setActiveStep] = useState(0);
@@ -34,8 +35,12 @@ function Checkout() {
     'الدفع',
     'التأكيد'
   ];
+  const navigate = useNavigate();
 
   const handleNext = () => {
+    if(activeStep === 3)
+      navigate('/');
+    else
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 

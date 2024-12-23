@@ -17,6 +17,9 @@ import ForgotPassword from './ForgotPassword'
 import Checkout from './Checkout'
 import ComingSoonPage from './subscription'
 import Profile from './Profile'
+// import ResetPasswordNew from './ResetPasswordNew'
+// import ResetPasswordVerification from './ResetPasswordVerification'
+
 
 
 
@@ -35,6 +38,8 @@ const User = () => {
                 <Route path="/TermsOfService" element={<TermsOfService/>} />
                 <Route path="/Donate/*" element={<DonationPage/>} />
                 <Route path="/ForgotPassword" element={<ForgotPassword/>} />
+                {/* <Route path="/verify-reset-code" element={<ResetPasswordNew/>} /> */}
+                {/* <Route path="/reset-password" element={<ResetPasswordVerification/>} /> */}
                 <Route path="/Checkout" element={<Checkout/>} />
                 <Route path="/subscription" element={<ComingSoonPage/>} />
                 <Route path="/Profile" element={<Profile/>} />

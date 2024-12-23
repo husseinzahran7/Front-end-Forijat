@@ -11,7 +11,11 @@ const API_ENDPOINTS = {
   // User
   login: `${API_BASE_URL}/api/auth/login/`,
   register: `${API_BASE_URL}/api/auth/register/`,
-  
+
+  forgotPassword: `${API_BASE_URL}/api/auth/request_password_reset/`,
+  verifyResetCode: 'your-api-base-url/verify-reset-code',
+  resetPassword: 'your-api-base-url/reset-password',
+
   getAllCases: `${API_BASE_URL}/api/cases/`,
   getCaseById:`${API_BASE_URL}/api/cases/`,
  
