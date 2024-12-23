@@ -141,8 +141,6 @@ function Navbar() {
               backgroundColor: item.selected ? "primary.main" : "transparent",
               color: item.selected ? "white" : "text.primary",
               textAlign: "right",
-              
-
             }}
           >
             <ListItemText primary={item.title} />
@@ -266,6 +264,7 @@ function Navbar() {
                   </MenuItem>
                   <MenuItem onClick={handleLogout}>
                     <LogoutIcon sx={{ mr: 1 }} /> {names.ar.logout}
+                    {" تسجيل الخروج"}
                   </MenuItem>
                 </Menu>
               </>
@@ -284,30 +283,6 @@ function Navbar() {
                 {names.ar.login}
               </Button>
             )}
-
-            {/* <Button
-              color="inherit"
-              component={RouterLink}
-              to="/login"
-              sx={{
-                color: "white",
-                fontWeight: "bold",
-                fontSize: "1rem",
-                bgcolor: "secondary.main",
-              }}
-            > */}
-            {/* Login */}
-            {/* {names.ar.login} */}
-            {/* </Button> */}
-            {/* <Button
-              color="inherit"
-              component={RouterLink}
-              to="/signup"
-              sx={{ color: "white", bgcolor: "secondary.main" }}
-            >
-              {/* Sign Up */}
-            {/* {names.ar.signup} */}
-            {/* </Button> */}
           </Box>
         </Toolbar>
       </AppBar>

@@ -215,7 +215,7 @@ function CardC({
           <Button
             size="small"
             variant="contained"
-            href={`/donate/${id}`}
+            href={`/donate/${case_.invoice_number}`}
             color="primary"
             sx={{ width: "100%", borderRadius: "50px" }}
           >

@@ -14,7 +14,7 @@ const TermsOfService = () => {
     <Container maxWidth="md" sx={{ py: 4, direction: 'rtl', textAlign: 'right' }}>
       <Paper elevation={3} sx={{ p: 4 ,my:4}}>
         <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold' }}>
-          اتفاقية مستوى الخدمة
+         {" اتفاقية مستوى الخدمة"}
         </Typography>
 
         <Box sx={{ mb: 3 }}>

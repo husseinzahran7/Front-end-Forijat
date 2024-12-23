@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -20,19 +20,59 @@ import {
   MenuItem,
   TextField,
   Typography,
-
 } from "@mui/material";
 import ShareIcon from "@mui/icons-material/Share";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import API_ENDPOINTS from "../../apiConfig";
+import axios from "axios";
 
-const info = [{ text: " الزيارات 551 زيارة", image: "../src/images/icon-eye.svg" },
-{ text: " آخر عملية تبرع قبل 2 دقيقة", image: "../src/images/icon-hand.svg" },
-{ text: " عدد عمليات التبرع 200 عملية", image: "../src/images/icon-last-donation.svg" },
-]
+
 const DonationPage = () => {
   const [open, setOpen] = useState(false);
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
   const [selectedCase, setSelectedCase] = useState(null);
+
+  const [amount, setAmount] = useState("");
+  const [error, setError] = useState("");
+
+  const [loading, setLoading] = useState(false);
+  const [errorFetch, setErrorFetch] = useState(null);
+  const [notFound, setNotFound] = useState(false);
+  const [caseDate, setCaseDate] = useState([]);
+  const [invoice_number, setInvoice_number] = useState("");
+
+  const handleAmountChange = (event) => {
+    const inputValue = event.target.value;
+    if (/^\d*\.?\d*$/.test(inputValue)) {
+      setAmount(inputValue);
+      setError("");
+    } else {
+      setError("Please enter a valid number.");
+    }
+  };
+
+  const info = [
+    { 
+      // text: " الزيارات 551 زيارة",
+      text: ` الزيارات ${caseDate.views} زيارة`,
+       image: "../src/images/icon-eye.svg" 
+      },
+    {
+      //  text: " آخر عملية تبرع قبل 2 دقيقة", 
+       text: ` آخر عملية تبرع قبل ${caseDate.last_donation = `null` ? 0 : caseDate.last_donation } دقيقة`, 
+       image: "../src/images/icon-hand.svg" },
+    {
+      // text: " عدد عمليات التبرع 200 عملية",
+      text: ` عدد عمليات التبرع ${caseDate.number_of_donations} عملية`,
+      image: "../src/images/icon-last-donation.svg",
+    },
+  ];
+
+  const handleButtonClick = (value) => {
+    setAmount(value);
+    setError("");
+  };
+
   const case_ = {
     id: 1,
     name: "John Doe",
@@ -50,7 +90,7 @@ const DonationPage = () => {
     setShareDialogOpen(false);
   };
 
-  // for the pop up 
+  // for the pop up
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -60,6 +100,8 @@ const DonationPage = () => {
     setOpen(false);
   };
   const pathLink = window.location.href;
+  const lastPart = pathLink.split('/').pop();
+  // console.log(lastPart);
 
   const copyShareLink = () => {
     if (selectedCase) {
@@ -67,9 +109,46 @@ const DonationPage = () => {
 
       // In a real app, this would be your actual case detail URL
       // const shareLink = `https://Amal.com/cases/${selectedCase.id}`;
-      const shareLink = `${pathLink}/donate/${selectedCase.invoiceNumber}`;
+      const shareLink = `${pathLink}`;
       navigator.clipboard.writeText(shareLink);
       // Optionally, show a snackbar or toast to confirm copying
+    }
+  };
+
+  useEffect(() => {
+    
+    fetchData(lastPart);
+  }, []);
+
+  // Define an async function for the API request
+  const fetchData = async (lastPart) => {
+    setLoading(true);
+    setError(null);
+    setNotFound(false);
+    try {
+      const response = await axios.get(
+        `${API_ENDPOINTS.getCaseById}${lastPart}`
+      );
+      if (response.data) {
+        setCaseDate(response.data);
+      } else {
+        setNotFound(true);
+        setCaseDate([]);
+      }
+      // console.log(`${API_ENDPOINTS.getCaseById}${lastPart}`);
+      // setInvoice_number(response.data.invoiceNumber);
+      console.log(response.data);
+      
+      // console.log(`here is the data: ${[caseDate]}`);
+      setLoading(false);
+    } catch (err) {
+      setError(err.message); // Handle error
+      console.log(err.message);
+      console.log("err.message");
+      setLoading(false);
+    } finally {
+      setLoading(false);
+      setNotFound(true);
     }
   };
 
@@ -106,11 +185,15 @@ const DonationPage = () => {
           </Box>
         </Box>
 
-        {/* MR  */}
-        {/* display the card here */}
-        {/* MR */}
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-          <Box sx={{ display: "flex", width: "100%", flexDirection: { xs: 'column', md: "row" }, alignItems: { s: "center", md: "flex-start" } }}>
+          <Box
+            sx={{
+              display: "flex",
+              width: "100%",
+              flexDirection: { xs: "column", md: "row" },
+              alignItems: { s: "center", md: "flex-start" },
+            }}
+          >
             <Box
               sx={{
                 display: "flex",
@@ -118,7 +201,7 @@ const DonationPage = () => {
                 justifyContent: "center",
                 alignItems: "center",
                 //                width: "600px",
-                width: { s: '100%', md: "600px" },
+                width: { s: "100%", md: "600px" },
                 border: "1px solid #ddd",
                 borderRadius: "20px",
                 boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
@@ -130,7 +213,7 @@ const DonationPage = () => {
               <Box
                 sx={{
                   display: "flex",
-                  flexDirection: 'column',
+                  flexDirection: "column",
                   width: "100%",
                   height: "66%",
                   pb: 2,
@@ -161,13 +244,12 @@ const DonationPage = () => {
                 >
                   <Box>
                     <Box>
-                      <Typography>
-                        {"أمل"}
-                      </Typography>
+                      <Typography>{"أمل"}</Typography>
                     </Box>
                     <Box>
                       <Typography>
-                        {"رقم الفاتورة: 1920404542"}
+                        {/* {"رقم الفاتورة: 1920404542"} */}
+                        {`رقم الفاتورة: ${caseDate.invoice_number}`}
                       </Typography>
                     </Box>
                   </Box>
@@ -199,16 +281,16 @@ const DonationPage = () => {
                       my: 1,
                     }}
                   >
-                    <Typography>
-                      {"عليه حكم منذ : 5 سنوات و 7 أشهر"}
-                    </Typography>
+                    <Typography>{"عليه حكم منذ : 5 سنوات و 7 أشهر"}</Typography>
                   </Box>
                   <Box>
                     <Typography>
-                      {"عليه امر بالتنفيذ وحكم بالسجن عمره 45 عاما متزوج لديه طفل متبقى عليه مبلغ 39212 ريال"}
+                      {/* {
+                        "عليه امر بالتنفيذ وحكم بالسجن عمره 45 عاما متزوج لديه طفل متبقى عليه مبلغ 39212 ريال"
+                      } */}
+                      {`${caseDate.description_plain}`}
                     </Typography>
                   </Box>
-
                 </Box>
               </Box>
               <Box
@@ -232,9 +314,7 @@ const DonationPage = () => {
                     transform: "scaleX(-1)",
                   }}
                 />
-                <Typography
-                sx={{mx:"auto"}}
-                >{"90%"}</Typography>
+                <Typography sx={{ mx: "auto" }}>{"90%"}</Typography>
               </Box>
               {/* bottom part */}
               <Box
@@ -245,7 +325,6 @@ const DonationPage = () => {
                   width: "100%",
                 }}
               >
-
                 <Box
                   sx={{
                     p: 3,
@@ -268,7 +347,8 @@ const DonationPage = () => {
                     component="div"
                     sx={{ color: "text.secondary" }}
                   >
-                    {"سعودي"}
+                    {/* {"سعودي"} */}
+                    {`${caseDate.nationality_display}`}
                   </Typography>
                 </Box>
                 <Box
@@ -287,13 +367,14 @@ const DonationPage = () => {
                   >
                     {/* {"Raised Amount"} */}
                     {"المبلغ الذي تم جمعه"}
+                    
                   </Typography>
                   <Typography
                     variant="caption"
                     component="div"
                     sx={{ color: "text.secondary" }}
                   >
-                    {"12,000"}
+                    {` ${caseDate.paid_amount}`}
                   </Typography>
                 </Box>
                 <Box
@@ -318,43 +399,20 @@ const DonationPage = () => {
                     component="div"
                     sx={{ color: "text.secondary" }}
                   >
-                    {"الرياض"}
+                    {/* {"الرياض"} */}
+                    {`${caseDate.jail_location_display}`}
                   </Typography>
                 </Box>
               </Box>
-              {/* <CardActions
+            </Box>
+            <Box sx={{ width: { s: "100%", md: "50%" } }}>
+              <Card
                 sx={{
-                  width: "100%",
-                  justifyContent: "space-between",
-                  px: 2,
-                  borderRadius: "0 0 20px 20px",
+                  width: { xl: "100%" },
+                  m: { xs: 2, md: 0 },
+                  borderRadius: "20px",
                 }}
               >
-                <IconButton
-                  color="primary"
-                  onClick={() => handleShareClick(case_)}
-                  aria-label="share"
-                >
-                  <ShareIcon />
-                </IconButton>
-                <Button
-                  size="small"
-                  variant="contained"
-                  href={`/donate/${2}`}
-                  color="primary"
-                  sx={{ width: "100%", borderRadius: "50px" }}
-                >
-                  {"تبرع الان"}
-                </Button>
-              </CardActions> */}
-              {/* <Box 
-                sx={{ width: '100%', m: 2 ,px:3}}>
-                <LinearProgress variant="determinate" value={90} sx={{ height: 20 ,borderRadius:"4px",transform: 'scaleX(-1)',}}/>
-
-              </Box > */}
-            </Box>
-            <Box sx={{ width: { s: '100%', md: "50%" } }}>
-              <Card sx={{ width: { xl: "100%" }, m: { xs: 2, md: 0 }, borderRadius: "20px" }}>
                 {/* <Divider /> */}
                 <CardContent
                 // sx={{borderRadius: "12px"}}
@@ -369,7 +427,7 @@ const DonationPage = () => {
                     {"مبلغ التبرع"}
                   </Typography>
                   <Grid container spacing={2}>
-                    <Grid item xs={4} lg={3} >
+                    <Grid item xs={4} lg={3}>
                       <Button
                         variant="outlined"
                         fullWidth
@@ -377,6 +435,7 @@ const DonationPage = () => {
                           fontSize: "1.2rem",
                           py: 1,
                         }}
+                        onClick={() => handleButtonClick("10")}
                       >
                         {"10 د.أ"}
                       </Button>
@@ -389,6 +448,7 @@ const DonationPage = () => {
                           fontSize: "1.2rem",
                           py: 1,
                         }}
+                        onClick={() => handleButtonClick("20")}
                       >
                         {"20 د.أ"}
                       </Button>
@@ -401,6 +461,7 @@ const DonationPage = () => {
                           fontSize: "1.2rem",
                           py: 1,
                         }}
+                        onClick={() => handleButtonClick("50")}
                       >
                         {"50 د.أ"}
                       </Button>
@@ -410,12 +471,14 @@ const DonationPage = () => {
                         variant="outlined"
                         fullWidth
                         placeholder="مبلغ آخر"
+                        value={amount}
+                        onChange={handleAmountChange}
+                        error={!!error}
+                        helperText={error}
                         InputProps={{
-                          endAdornment: (
-                            <Box sx={{ ml: 1 }}>
-                              {"د.أ"}
-                            </Box>
-                          ),
+                          endAdornment: <Box sx={{ ml: 1 }}>{"د.أ"}</Box>,
+                          inputMode: "decimal",
+                          pattern: "[0-9]*[.,]?[0-9]*",
                         }}
                       />
                     </Grid>
@@ -425,50 +488,41 @@ const DonationPage = () => {
                 {/* total visited number */}
 
                 <Box sx={{ mx: 2, my: 1 }}>
-
-                  <Button variant="contained" color="primary" sx={{ width: "100%", borderRadius: "30px", }}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    sx={{ width: "100%", borderRadius: "30px" }}
+                  >
                     {"تبرع"}
                   </Button>
-
                 </Box>
-
-
               </Card>
               <Grid container spacing={2} sx={{ px: 2, py: 1 }}>
-                {
-                  info.map((item, index) => (
-                    <Grid
-                      key={index}
-                      item
-                      xs={12}
-
-                      container
-                      justifyContent="center"
+                {info.map((item, index) => (
+                  <Grid
+                    key={index}
+                    item
+                    xs={12}
+                    container
+                    justifyContent="center"
+                  >
+                    <Box
+                      sx={{
+                        width: "100%",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        border: "1px solid black",
+                        px: 2,
+                        py: 1,
+                        borderRadius: "14px",
+                      }}
                     >
-                      <Box
-                        sx={{
-                          width: "100%",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          border: "1px solid black",
-                          px: 2,
-                          py: 1,
-                          borderRadius: "14px"
-                        }}
-                      >
-                        <img src={item.image} />
-                        <Typography>
-                          {item.text}
-                        </Typography>
-
-                      </Box>
-                    </Grid>
-                  ))
-                }
-
-
-
+                      <img src={item.image} />
+                      <Typography>{item.text}</Typography>
+                    </Box>
+                  </Grid>
+                ))}
               </Grid>
             </Box>
           </Box>
@@ -479,7 +533,7 @@ const DonationPage = () => {
         onClose={handleShareClose}
         aria-labelledby="share-dialog-title"
         dir="rtl"
-        sx={{ '& .MuiDialog-paper': { width: '600px', maxWidth: '800px' } }}
+        sx={{ "& .MuiDialog-paper": { width: "600px", maxWidth: "800px" } }}
       >
         <DialogTitle id="share-dialog-title">
           {/* {"Share Case"} */}
@@ -502,9 +556,7 @@ const DonationPage = () => {
             type="text"
             fullWidth
             variant="outlined"
-            value={
-              selectedCase ? `${pathLink}/${selectedCase.invoiceNumber}` : ""
-            }
+            value={selectedCase ? `${pathLink}` : ""}
             InputProps={{
               endAdornment: (
                 <IconButton onClick={copyShareLink}>
@@ -525,33 +577,3 @@ const DonationPage = () => {
 };
 
 export default DonationPage;
-
-
-{/* <Box sx={{ p: 2 }}>
-          <Typography variant="body2">
-            {"عدد الحالات: 2,096 | عدد عمليات التبرع: 5,084 زيارة"}
-          </Typography>
-          {/* <Typography variant="body2">{"وقت التسليم: 10 أيام"}</Typography> */}
-{/* <Box sx={{ mt: 2 }}>
-            <LinearProgress variant="determinate" value={76} />
-            <Typography variant="body2" sx={{ mt: 1 }}>
-              {"76% من إجمالي المبلغ المستهدف"} */}
-{/* </Typography> */ }
-{/* </Box>
-        </Box> */}
-{/* <Divider />
-        <Box sx={{ p: 2 }}>
-          <Typography variant="body2">
-            {"عليك بالتبرع وحكم بالسجن عمره 50 عاما متصل لمدة 3 أطفال منتق"}
-          </Typography>
-          <Typography variant="body2">{"عليه ميزلي 14745 د.أ"}</Typography>
-        </Box>
-        <Divider />
-        <Box sx={{ p: 2 }}>
-          <Typography variant="body2">
-            {"الجنسية: سعودي | المبلغ المتبرع به: 14,745 د.أ"}
-          </Typography>
-          <Typography variant="body2">
-            {" الرقم التعريفي: 199948820"}
-          </Typography> */}
-{/* </Box> */ }

@@ -141,16 +141,16 @@ function Checkout() {
                       control={<Radio />} 
                       label="بطاقة الائتمان" 
                     />
-                    <FormControlLabel 
+                    {/* <FormControlLabel 
                       value="bank" 
                       control={<Radio />} 
                       label="التحويل البنكي" 
-                    />
-                    <FormControlLabel 
+                    /> */}
+                    {/* <FormControlLabel 
                       value="apple" 
                       control={<Radio />} 
                       label="Apple Pay" 
-                    />
+                    /> */}
                     <FormControlLabel 
                       value="paypal" 
                       control={<Radio />} 
@@ -225,7 +225,7 @@ function Checkout() {
                 تفاصيل التبرع:
               </Typography>
               <Typography>
-                المبلغ: {donationAmount} ريال
+                المبلغ: {donationAmount} د.أ
               </Typography>
               <Typography>
                 طريقة الدفع: {

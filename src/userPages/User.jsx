@@ -40,7 +40,10 @@ const User = () => {
                 <Route path="/ForgotPassword" element={<ForgotPassword/>} />
                 {/* <Route path="/verify-reset-code" element={<ResetPasswordNew/>} /> */}
                 {/* <Route path="/reset-password" element={<ResetPasswordVerification/>} /> */}
-                <Route path="/Checkout" element={<Checkout/>} />
+
+                {/* add login validation to the checkout page */}
+            <Route path="/Checkout" element={ user ? <Checkout/> : <Login/> } />
+
                 <Route path="/subscription" element={<ComingSoonPage/>} />
                 <Route path="/Profile" element={<Profile/>} />
                 
