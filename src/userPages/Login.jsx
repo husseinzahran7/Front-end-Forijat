@@ -13,7 +13,7 @@ import {
   Alert,
   Snackbar,
 } from "@mui/material";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { Link as RouterLink, useLocation, useNavigate } from "react-router-dom";
 import LoginIcon from "@mui/icons-material/Login";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import axios from "axios";
@@ -28,6 +28,9 @@ function Login() {
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || '/'; // Default to home page if `from` is not set
+
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -58,7 +61,8 @@ function Login() {
     };
 
     localStorage.setItem("user", JSON.stringify(userData));
-    navigate("/");
+    // navigate("/");
+    navigate(from, { replace: true });
     window.location.reload();
 
 

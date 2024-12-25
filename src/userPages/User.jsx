@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 
 // Components
 import Layout from '../components/Layout'
@@ -42,7 +42,8 @@ const User = () => {
                 {/* <Route path="/reset-password" element={<ResetPasswordVerification/>} /> */}
 
                 {/* add login validation to the checkout page */}
-            <Route path="/Checkout" element={ user ? <Checkout/> : <Login/> } />
+            {/* <Route path="/Checkout" element={ user ? <Checkout/> : <Login/> } /> */}
+            <Route path="/Checkout" element={ user ? <Checkout/> : <Navigate to="/login" state={{ from: useLocation() }} replace /> } />
 
                 <Route path="/subscription" element={<ComingSoonPage/>} />
                 <Route path="/Profile" element={<Profile/>} />

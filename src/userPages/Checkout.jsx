@@ -17,7 +17,7 @@ import {
   Divider,
 } from '@mui/material';
 import Paypal from '../components/PayPal';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,useLocation  } from 'react-router-dom';
 
 function Checkout() {
   const [activeStep, setActiveStep] = useState(0);
@@ -28,6 +28,11 @@ function Checkout() {
     email: '',
     phone: '',
   });
+
+  const location = useLocation();
+  const { invoice_number, amount } = location.state || {}; // Extract the state data
+  
+
 
   const steps = [
     'تفاصيل التبرع',
@@ -71,7 +76,7 @@ function Checkout() {
                   label="المبلغ"
                   type="number"
                   variant="outlined"
-                  value={donationAmount}
+                  value={donationAmount==""?amount:donationAmount}
                   onChange={(e) => setDonationAmount(e.target.value)}
                   placeholder="أدخل مبلغ التبرع"
                 />

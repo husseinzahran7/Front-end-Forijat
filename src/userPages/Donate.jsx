@@ -25,7 +25,7 @@ import ShareIcon from "@mui/icons-material/Share";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import API_ENDPOINTS from "../../apiConfig";
 import axios from "axios";
-
+import { useNavigate } from "react-router-dom";
 
 const DonationPage = () => {
   const [open, setOpen] = useState(false);
@@ -40,6 +40,7 @@ const DonationPage = () => {
   const [notFound, setNotFound] = useState(false);
   const [caseDate, setCaseDate] = useState([]);
   const [invoice_number, setInvoice_number] = useState("");
+  const navigate = useNavigate();
 
   const handleAmountChange = (event) => {
     const inputValue = event.target.value;
@@ -52,15 +53,18 @@ const DonationPage = () => {
   };
 
   const info = [
-    { 
+    {
       // text: " الزيارات 551 زيارة",
       text: ` الزيارات ${caseDate.views} زيارة`,
-       image: "../src/images/icon-eye.svg" 
-      },
+      image: "../src/images/icon-eye.svg",
+    },
     {
-      //  text: " آخر عملية تبرع قبل 2 دقيقة", 
-       text: ` آخر عملية تبرع قبل ${caseDate.last_donation = `null` ? 0 : caseDate.last_donation } دقيقة`, 
-       image: "../src/images/icon-hand.svg" },
+      //  text: " آخر عملية تبرع قبل 2 دقيقة",
+      text: ` آخر عملية تبرع قبل ${(caseDate.last_donation = `null`
+        ? 0
+        : caseDate.last_donation)} دقيقة`,
+      image: "../src/images/icon-hand.svg",
+    },
     {
       // text: " عدد عمليات التبرع 200 عملية",
       text: ` عدد عمليات التبرع ${caseDate.number_of_donations} عملية`,
@@ -100,7 +104,7 @@ const DonationPage = () => {
     setOpen(false);
   };
   const pathLink = window.location.href;
-  const lastPart = pathLink.split('/').pop();
+  const lastPart = pathLink.split("/").pop();
   // console.log(lastPart);
 
   const copyShareLink = () => {
@@ -115,8 +119,10 @@ const DonationPage = () => {
     }
   };
 
+  // calculate progress bar
+  const porgress = (caseDate.paid_amount / caseDate.total_amount) * 100;
+
   useEffect(() => {
-    
     fetchData(lastPart);
   }, []);
 
@@ -138,7 +144,7 @@ const DonationPage = () => {
       // console.log(`${API_ENDPOINTS.getCaseById}${lastPart}`);
       // setInvoice_number(response.data.invoiceNumber);
       console.log(response.data);
-      
+
       // console.log(`here is the data: ${[caseDate]}`);
       setLoading(false);
     } catch (err) {
@@ -272,6 +278,7 @@ const DonationPage = () => {
                     background: "white",
                   }}
                 >
+                  {/* duration */}
                   <Box
                     sx={{
                       bgcolor: "lightgray",
@@ -281,10 +288,19 @@ const DonationPage = () => {
                       my: 1,
                     }}
                   >
-                    <Typography>{"عليه حكم منذ : 5 سنوات و 7 أشهر"}</Typography>
+                    <Typography>
+                      {/* {"عليه حكم منذ : 5 سنوات و 7 أشهر"} */}
+                      {`حكم عليه منذ : ${caseDate.duration_date}`}
+                    </Typography>
                   </Box>
                   <Box>
-                    <Typography>
+                    <Typography variant="body1" component="div" 
+                    sx={{
+                      mb: 1,
+                      textAlign: "right",
+                      fontWeight: "bold",
+                    }}
+                    >
                       {/* {
                         "عليه امر بالتنفيذ وحكم بالسجن عمره 45 عاما متزوج لديه طفل متبقى عليه مبلغ 39212 ريال"
                       } */}
@@ -304,9 +320,10 @@ const DonationPage = () => {
                   alignItems: "center", // Vertically align items
                 }}
               >
+                {/* progress bar */}
                 <LinearProgress
                   variant="determinate"
-                  value={90}
+                  value={porgress}
                   sx={{
                     height: 20,
                     borderRadius: "4px",
@@ -314,7 +331,7 @@ const DonationPage = () => {
                     transform: "scaleX(-1)",
                   }}
                 />
-                <Typography sx={{ mx: "auto" }}>{"90%"}</Typography>
+                <Typography sx={{ mx: "auto" }}>{`${porgress}%`}</Typography>
               </Box>
               {/* bottom part */}
               <Box
@@ -367,7 +384,6 @@ const DonationPage = () => {
                   >
                     {/* {"Raised Amount"} */}
                     {"المبلغ الذي تم جمعه"}
-                    
                   </Typography>
                   <Typography
                     variant="caption"
@@ -491,6 +507,18 @@ const DonationPage = () => {
                   <Button
                     variant="contained"
                     color="primary"
+                    size="large"
+                    fullWidth
+                    disabled={loading || !amount}
+                    // navigate to checkout page
+                    onClick={() => {
+                      navigate("/checkout", {
+                        state: { invoice_number: lastPart, amount: amount },
+                      });
+                    }}
+                    // onClick={() => {
+                    //   handleClickOpen();
+                    // }}
                     sx={{ width: "100%", borderRadius: "30px" }}
                   >
                     {"تبرع"}

@@ -65,7 +65,7 @@ const initialFilterValues = {
 function Cases() {
   const [currentPage, setCurrentPage] = useState(1);
   const [filter, setFilter] = useState(false);
-  const casesPerPage = 9; // Number of cases per page
+  const [casesPerPage] = useState(10); // Number of cases per page
   const [totalPages, setTotalPages] = useState(0);
   const theme = useTheme();
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
@@ -75,6 +75,9 @@ function Cases() {
   const [error, setError] = useState(false);
   const [filterValues, setFilterValues] = useState(initialFilterValues);
   const [invoiceNumber, setInvoiceNumber] = useState("");
+
+
+  const currentCases = caseDate; // Use API results directly
 
   const [notFound, setNotFound] = useState(false);
 
@@ -94,7 +97,7 @@ function Cases() {
       setCaseDate(response.data.results); // Update state with response data
 
       // Calculate total pages from API response
-      setTotalPages(Math.ceil(response.data.count / 9)); // Assuming 9 items per page
+      setTotalPages(Math.ceil(response.data.count / casesPerPage)); // Update total pages
 
       // console.log(caseDate);
       setLoading(false);
@@ -103,14 +106,22 @@ function Cases() {
       console.log(err.message);
       console.log("err.message");
       setLoading(false);
+    } finally {
+      setLoading(false);
     }
   };
+  // const handlePageChange = (event, newPage) => {
+  //   setCurrentPage(newPage);
+  //   // console.log("here");
+  //   // console.log(`newPage value:${newPage}`);
+  //   // console.log(`currentPage value:${currentPage}`);
+
+  //   window.scrollTo({ top: 0, behavior: "smooth" });
+  // };
+
   const handlePageChange = (event, newPage) => {
     setCurrentPage(newPage);
-    console.log("here");
-    console.log(`newPage value:${newPage}`);
-    console.log(`currentPage value:${currentPage}`);
-
+    console.log(`Page changed to: ${newPage}`);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -222,9 +233,9 @@ function Cases() {
   };
 
   // Calculate current page's cases
-  const indexOfLastCase = currentPage * casesPerPage;
-  const indexOfFirstCase = indexOfLastCase - casesPerPage;
-  const currentCases = caseDate.slice(indexOfFirstCase, indexOfLastCase);
+  // const indexOfLastCase = currentPage * casesPerPage;
+  // const indexOfFirstCase = indexOfLastCase - casesPerPage;
+  // const currentCases = caseDate.slice(indexOfFirstCase, indexOfLastCase);
 
   const filters = [
     {
