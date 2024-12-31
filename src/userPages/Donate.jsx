@@ -122,7 +122,18 @@ const DonationPage = () => {
   // calculate progress bar
   const porgress = (caseDate.paid_amount / caseDate.total_amount) * 100;
 
+  const user = JSON.parse(localStorage.getItem("user"));
+
+
   useEffect(() => {
+
+    if(!user) {
+      // move to cases page
+      navigate("/login");
+      return;
+    }
+
+
     fetchData(lastPart);
   }, []);
 

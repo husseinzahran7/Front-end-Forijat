@@ -81,7 +81,23 @@ function CardC({
                 alignContent: "center",
               }}
             >
-              <Typography textAlign="center">{Story}</Typography>
+              <Typography textAlign="center" 
+              // add limit at 100 characters
+
+              variant="h6"
+              sx={{
+                fontSize: "1rem",
+                // fontWeight: 600,
+                lineHeight: "1.5rem",
+                // color: theme.palette.common.white,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                display: "-webkit-box",
+                WebkitLineClamp: 3,
+                WebkitBoxOrient: "vertical",
+              }}
+
+              >{Story}</Typography>
             </Box>
             <Box
               sx={{
@@ -98,7 +114,17 @@ function CardC({
                   "linear-gradient(to right, rgba(24, 40, 71, 0.3), rgba(0, 157, 220, 0.3))",
               }}
             >
-              <Typography textAlign="center" color="white">
+              <Typography textAlign="center" color="white" variant="caption"
+              sx={{
+                fontSize: "0.875rem",
+                lineHeight: "1.25rem",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                display: "-webkit-box",
+                WebkitLineClamp: 1,
+                WebkitBoxOrient: "vertical",
+              }}
+              >
                 {/* {"Invoice number: "}  */}
                 {"رقم الفاتورة: "}
                 {InvioceNumber}

@@ -36,14 +36,16 @@ const User = () => {
                 <Route path="/Signup" element={<Signup/>} />
                 <Route path="/privacy" element={<PrivacyPolicy/>} />
                 <Route path="/TermsOfService" element={<TermsOfService/>} />
-                <Route path="/Donate/*" element={<DonationPage/>} />
+                <Route path="/Donate/*" element={user?(<DonationPage/>) :(<Navigate to="/login" state={{ from: useLocation() }} replace />)} />
+
                 <Route path="/ForgotPassword" element={<ForgotPassword/>} />
                 {/* <Route path="/verify-reset-code" element={<ResetPasswordNew/>} /> */}
                 {/* <Route path="/reset-password" element={<ResetPasswordVerification/>} /> */}
 
                 {/* add login validation to the checkout page */}
             {/* <Route path="/Checkout" element={ user ? <Checkout/> : <Login/> } /> */}
-            <Route path="/Checkout" element={ user ? <Checkout/> : <Navigate to="/login" state={{ from: useLocation() }} replace /> } />
+                <Route path="/Checkout" element={ user ? (<Checkout/>) :( <Navigate to="/login" state={{ from: useLocation() }} replace />) } />
+                <Route path="/Checkout" element= {<Checkout/>} />
 
                 <Route path="/subscription" element={<ComingSoonPage/>} />
                 <Route path="/Profile" element={<Profile/>} />

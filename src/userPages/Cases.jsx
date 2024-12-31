@@ -83,6 +83,7 @@ function Cases() {
 
   useEffect(() => {
     fetchData(); // Call the fetch function
+    window.scrollTo(0, 0); // Scroll to top of the page
   }, [currentPage, filter]); // Add currentPage as dependency to refetch when page changes
 
   // Define an async function for the API request
@@ -277,15 +278,15 @@ function Cases() {
         { display: "أخرى", value: "OT" },
       ],
     },
-    {
-      key: "gender",
-      label: "الجنس",
-      options: [
-        { display: "الكل", value: "" },
-        { display: "ذكر", value: "M" },
-        { display: "أنثى", value: "F" },
-      ],
-    },
+    // {
+    //   key: "gender",
+    //   label: "الجنس",
+    //   options: [
+    //     { display: "الكل", value: "" },
+    //     { display: "ذكر", value: "M" },
+    //     { display: "أنثى", value: "F" },
+    //   ],
+    // },
     {
       key: "social_status",
       label: "الحالة الإجتماعية",
@@ -320,6 +321,7 @@ function Cases() {
       ],
     },
   ];
+
 
   return (
     <Container maxWidth="lg" sx={{ my: 6 }}>

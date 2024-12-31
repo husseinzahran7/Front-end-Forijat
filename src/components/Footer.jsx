@@ -16,8 +16,9 @@ function Footer() {
           <Container
             maxWidth="lg"
             display="flex"
-            justifyContent="space-between"
-            alignItems="center"
+            // justifyContent="space-between"
+           
+            // alignItems="center"
           >
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6} md={6}>

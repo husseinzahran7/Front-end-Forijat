@@ -29,8 +29,7 @@ function Login() {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathname || '/'; // Default to home page if `from` is not set
-
+  const from = location.state?.from?.pathname || "/"; // Default to home page if `from` is not set
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -40,38 +39,29 @@ function Login() {
     setError("");
 
     try {
-      const response = await axios.post(
-        API_ENDPOINTS.login,
-        {
-          email: email,
-          password: password,
-        },
-        // {
-        //   headers: {
-        //     "Content-Type": "application/json",
-        //   },
-        // }
-      );
+      const response = await axios.post(API_ENDPOINTS.login, {
+        email: email,
+        password: password,
+      });
 
       // Handle successful login
-    const userData = {
-      email: email,
-      token: response.data.token, // Assuming the backend returns a token
-      timestamp: Date.now(),
-    };
+      const userData = response.data;
+      localStorage.setItem("user", JSON.stringify(userData));
 
-    localStorage.setItem("user", JSON.stringify(userData));
-    // navigate("/");
-    navigate(from, { replace: true });
-    window.location.reload();
+      // if not form my app navigate to home but if the user came from app page nav back to it after login
+      // navigate(from, { replace: true });
 
+      // Navigate back to the originating page or default to "/"
+      navigate(from, { replace: true });
 
-    }catch (error) {
+       // Optional: Reload to refresh authenticated content
+      window.location.reload();
+    } catch (error) {
       // Handle login errors
       if (error.response) {
         // The request was made and the server responded with a status code
         // that falls out of the range of 2xx
-        setError(error.response.data.detail || "Login failed");
+        setError(error.response?.data?.detail || "Login failed");
       } else if (error.request) {
         // The request was made but no response was received
         setError("No response from server");
@@ -82,8 +72,7 @@ function Login() {
       setOpenSnackbar(true);
       setIsLoading(false);
     }
-  }; 
- 
+  };
 
   // Handle Snackbar close
   const handleCloseSnackbar = (event, reason) => {

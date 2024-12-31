@@ -28,7 +28,6 @@ import API_ENDPOINTS from "../../apiConfig";
 const slides = [
   // "./src/images/charity-photo.jpeg",
   "https://images.unsplash.com/photo-1618620864043-896c2d11c7fc?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-
   "https://img.freepik.com/free-photo/faith-christian-concept-spiritual-prayer-hands-sun-shine_1150-9112.jpg?t=st=1733002045~exp=1733005645~hmac=1b8a29204afc2beb8dd2f837aa9c1ccab06c877a68225dd8ab078e62c7d9b501&w=996",
   "https://images.unsplash.com/photo-1500206329404-5057e0aefa48?q=80&w=1776&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   // "https://images.unsplash.com/photo-1546450334-5a84ac3a1f0e?q=80&w=2074&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",

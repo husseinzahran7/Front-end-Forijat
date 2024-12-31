@@ -7,6 +7,7 @@ import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
 import "./App.css";
 import User from "./userPages/User";
 
+
 const theme = createTheme({
   // direction: 'rtl',
   // components: {
@@ -92,6 +93,7 @@ const theme = createTheme({
 function App() {
   return (
     <>
+    
      <CssBaseline />
       <ThemeProvider theme={theme}>
        
@@ -104,6 +106,7 @@ function App() {
         </BrowserRouter>
 
       </ThemeProvider>
+     
     </>
   );
 }

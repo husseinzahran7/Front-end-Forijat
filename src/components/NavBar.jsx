@@ -197,7 +197,7 @@ function Navbar() {
               {names.ar.logoName}
             </Typography>
           </Box>
-          <Box sx={{ direction: "rtl", display: { xs: "none", md: "block" } }}>
+          <Box sx={{ direction: "rtl", display: { xs: "none", sm: "block" } }}>
             {navItems.map((item) => (
               <Button
                 key={item.title}
