@@ -196,37 +196,13 @@ function Checkout() {
       donorName: `${user.firstName} ${user.lastName}`,
     };
 
-    // const paymentData = {
-    //   invoice_number: "987",
-    //   amount: "950",
-    //   donorName: "Hussein Zahran",
-    //   donorEmail: "hh@hh.com",
-    //   paymentProvider: "paypal"
-    // }
+  
 
     try {
       console.log(paymentData);
       const response = await axios.post(
         API_ENDPOINTS.donationApi,
-        // "http://127.0.0.1:8000/api/donations/",
         paymentData,
-        // {
-        //   invoice_number: "CASE-20241230-IIQU",
-        //   amount: "10",
-        //   donorName: "Hussein Zahran",
-        //   donorEmail: "hh@hh.com",
-        //   paymentProvider: "paypal",
-        // },
-        // {headers: {
-        //   // "Content-Type": "application/json",
-        //   // Add any authentication headers if needed
-        //   // 'Authorization': `Bearer ${localStorage.getItem('token')}`,
-        //   // Authorization: `Bearer ${localStorage.getItem("token")}`, // Add auth token
-        //   // base authorization
-
-        //   // Accept: "application/json",
-        // },}
-        // }
       );
       console.log(response);
 
